@@ -1,0 +1,38 @@
+const express = require('express');
+const router = express.Router();
+const rentPostModule = require('../../modules/rentPost/rentPostController.js');
+const { authentication, authorization } = require('../../middleware/auth.middleware');
+const { catSanitize, catValidate, sanitize, validate, countValidate, countSanitize } = require('../../modules/rentPost/rentPostValidation.js');
+
+router.get('/auth', authentication, authorization, rentPostModule.getRentPostAuthorize);
+router.get('/', authentication, rentPostModule.getRentPostNonAuthorize);
+router.get('/public', rentPostModule.getRentPostUnauthorize);
+router.get('/highlight', rentPostModule.getHighlightRentPost);
+router.get('/latest', rentPostModule.getLatestRentPost);
+router.get('/showcase', rentPostModule.getShowcaseRentPost);
+router.get('/trending', rentPostModule.getTrendingRentPost);
+router.get('/latest/:cat_id', rentPostModule.getLatestRentPostByCat);
+router.get('/related/:slug_url', rentPostModule.getRelatedRentPost);
+router.get('/category', rentPostModule.getRentPostCategory);
+router.get('/category/active', rentPostModule.getRentPostCategoryActive);
+router.get('/category/:id', rentPostModule.getRentPostCatById);
+router.get('/rentPost/:slug_url', rentPostModule.getRentPostBySlug);
+router.get('/rentPostById/:id', rentPostModule.getRentPostById);
+router.get('/rentPostByCat/:slug_url', rentPostModule.getRentPostByCat);
+router.get('/rentPostByTag/:tag', rentPostModule.getRentPostByTag);
+router.get('/rentPostByCreator/:creator', rentPostModule.getRentPostByCreator);
+router.get('/rentPostByTime', rentPostModule.getRentPostArchives);
+router.get('/rentPostByTime/:time', rentPostModule.getRentPostByDate);
+router.post('/', authentication, authorization, sanitize, validate, rentPostModule.SaveRentPost);
+router.post('/category', authentication, authorization, catSanitize, catValidate, rentPostModule.saveRentPostCategory);
+router.post('/sub_category', authentication, authorization, catSanitize, catValidate, rentPostModule.saveRentPostSubCategory);
+router.delete('/:id', authentication, authorization, rentPostModule.deleteRentPost);
+router.delete('/category/:id', authentication, authorization, rentPostModule.deleteRentPostCat);
+router.get('/htmlRentPost/:id', rentPostModule.getStaticRentPost);
+router.get('/count/increase/:id', countSanitize, countValidate, rentPostModule.updateViewCount);
+router.get('/count/category/:id', authentication, authorization, rentPostModule.countRentPostByCat);
+router.get('/count/sub_category/:id', authentication, authorization, rentPostModule.countRentPostBySubCat);
+router.post('/multiple/rentPost', authentication, authorization, rentPostModule.selectMultipleDataRentPost);
+router.post('/multiple/category', authentication, authorization, rentPostModule.selectMultipleDataCat);
+
+module.exports = router;

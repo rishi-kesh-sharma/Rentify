@@ -99,6 +99,7 @@ authMiddleware.authorization = async (req, res, next) => {
       return otherHelper.sendResponse(res, HttpStatus.UNAUTHORIZED, false, null, null, 'Module Access Restricted', null);
     }
     if (role && role.length && moduleId) {
+      const data = await accessSch.findById('5cd3e8c38b04033660064364').populate('module_id role_id');
       const access = await accessSch.findOne({ is_active: true, role_id: { $in: role }, access_type: { $in: moduleId } });
       if (access && access.access_type) {
         return next();

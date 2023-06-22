@@ -1,7 +1,6 @@
-
 const { getSetting } = require('./settings.helper');
 
-module.exports = async passport => {
+module.exports = async (passport) => {
   passport.serializeUser((user, done) => {
     done(null, user);
   });
@@ -11,10 +10,10 @@ module.exports = async passport => {
   const isFacebookAuth = await getSetting('auth', 'facebook', 'allow_login');
   const isGoogleAuth = await getSetting('auth', 'google', 'allow_login');
 
-  if (isGoogleAuth == true) {
+  if (!isGoogleAuth == false) {
+    console.log('isGoogleAuth ', isGoogleAuth);
     const clientID = await getSetting('auth', 'google', 'client_id');
-    const clientSecret = await getSetting('auth', 'google', 'secret');
-
+    const clientSecret = await getSetting('auth', 'google', 'client_secret');
     const GoogleTokenStrategy = require('passport-google-token').Strategy;
     passport.use(
       new GoogleTokenStrategy(
@@ -24,7 +23,6 @@ module.exports = async passport => {
         },
         async (accessToken, refreshToken, profile, cb, req) => {
           try {
-            // Extract the minimal profile information we need from the profile object
             const user = { name: profile.displayName, first_name: profile.name.givenName, last_name: profile.name.familyName, email: profile.emails[0].value, picture: profile._json.picture, provider: 'google', id: profile.id };
             return cb(null, user);
           } catch (err) {
@@ -35,7 +33,7 @@ module.exports = async passport => {
       ),
     );
   }
-  if (isFacebookAuth == true) {
+  if (!isFacebookAuth == false) {
     const FacebookTokenStrategy = require('passport-facebook-token');
     const FACEBOOK_APP_ID = await getSetting('auth', 'facebook', 'app_id');
     const FACEBOOK_APP_SECRET = await getSetting('auth', 'facebook', 'app_secret');

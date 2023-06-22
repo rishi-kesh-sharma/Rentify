@@ -223,6 +223,7 @@ export const GlobalSetting = (props) => {
             options={listValue}
             value={listValueNormalized[`${one.value}`] || ''}
             id="value"
+            name="value"
             onChange={handleSelectChange('value')}
           />
         )}

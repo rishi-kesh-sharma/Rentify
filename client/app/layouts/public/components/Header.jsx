@@ -39,7 +39,8 @@ const Header = (props) => {
       <div className="container mx-auto flex justify-between flex-wrap relative">
         <div className="h-12 flex items-center p md:w-1/2 lg:w-1/6 order-2 md:order-none">
           <Link to="/">
-            <img src={logo} alt="WaftEngine" />
+            {/* <img src={logo} alt="Rentify" /> */}
+            Rentify
           </Link>
         </div>
         <div className="flex-1 flex items-center">

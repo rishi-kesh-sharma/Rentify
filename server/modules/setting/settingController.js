@@ -60,7 +60,6 @@ settingController.GetSettingType = async (req, res, next) => {
 };
 settingController.GetSettingByKey = async (req, res, next) => {
   try {
-
     const type = req.params.type;
     const subtype = req.params.subtype;
     const key = req.params.key;
@@ -89,6 +88,7 @@ settingController.GetSettingSingle = async (req, res, next) => {
 };
 
 settingController.SaveSetting = async (req, res, next) => {
+  console.log('from save setting ', req.body.value);
   try {
     let data = req.body;
     let admin_role_id = await getSetting('roles', 'admin', 'admin_id');
@@ -123,6 +123,7 @@ settingController.SaveSetting = async (req, res, next) => {
   }
 };
 settingController.EditSetting = async (req, res, next) => {
+  console.log('in edit setting ', req.body);
   try {
     const data = req.body;
     let allData = [];

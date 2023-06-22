@@ -57,6 +57,7 @@ internal.renderTemplate = async (template_key, variables_OBJ, toEmail) => {
   if (isEmpty(unrendered)) {
     return { error: 'Invalid Template Key' };
   }
+
   let from = unrendered.from + '';
   let body = unrendered.body + '';
   let subject = unrendered.subject + '';
@@ -75,8 +76,10 @@ internal.renderTemplate = async (template_key, variables_OBJ, toEmail) => {
     body = body.replace(re, variables_OBJ[variables_keys[i]]);
     alternate_text = alternate_text.replace(re, variables_OBJ[variables_keys[i]]);
   }
-  const email_footer = await getSetting('email', 'header_footer', 'footer');
-  const email_header = await getSetting('email', 'header_footer', 'header');
+  // const email_footer = await getSetting('email', 'header_footer', 'footer');
+  const email_footer = await getSetting('template', 'email', 'footer');
+  // const email_header = await getSetting('email', 'header_footer', 'header');
+  const email_header = await getSetting('template', 'email', 'header');
 
   body = `${email_header}${body}${email_footer}`;
   return { from, subject, html: body, text: alternate_text, to: toEmail };

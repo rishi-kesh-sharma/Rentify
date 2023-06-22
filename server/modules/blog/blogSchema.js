@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const blogSchema = new schema({
-  title: { type: String },
-  description: { type: String },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
   short_description: { type: String },
   meta_tag: { type: [String] },
   meta_description: { type: String },
@@ -27,5 +27,4 @@ const blogSchema = new schema({
   updated_by: { type: schema.Types.ObjectId, ref: 'users' },
   updated_at: { type: Date, default: Date.now },
 });
-
 module.exports = Blog = mongoose.model('blog', blogSchema);

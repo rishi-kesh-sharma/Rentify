@@ -3,6 +3,7 @@ const settingSch = require('../modules/setting/settingSchema');
 module.exports.getSetting = async (type, sub_type, key) => {
   try {
     const temp = 'global_' + type.trim() + '_' + sub_type.trim() + '_' + key.trim();
+    console.log(temp);
     if (temp) {
       let value = process.env[temp];
       if (value == undefined) {
@@ -22,8 +23,10 @@ module.exports.getSetting = async (type, sub_type, key) => {
   }
 };
 module.exports.setSetting = (type, sub_type, key, value) => {
+  console.log('value' + value);
   try {
     const temp = 'global_' + type.trim() + '_' + sub_type.trim() + '_' + key.trim();
+
     process.env[temp] = JSON.stringify(value);
     return null;
   } catch (err) {

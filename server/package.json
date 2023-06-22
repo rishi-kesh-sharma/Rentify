@@ -1,17 +1,19 @@
 {
-  "name": "WaftEngine-Server",
+  "name": "Rentify-Server",
   "version": "1.0.0",
-  "description": "Server for API of WaftEngine",
+  "description": "Server for API of Rentify",
   "main": "index.js",
   "scripts": {
     "client": "npm start --prefix ../client",
     "start": "nodemon index.js",
+    "docs:build": "swagger-cli bundle ./swagger/swagger.json -t json --outfile swagger/build/swagger.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Waft Technology Pvt.Ltd. Nepal",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^6.5.5",
+    "autorest": "^3.6.3",
     "awesome-phonenumber": "^2.31.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -40,6 +42,7 @@
     "request-ip": "^2.1.3",
     "request-promise": "^4.2.2",
     "speakeasy": "^2.0.0",
+    "swagger-ui-express": "^4.6.3",
     "uniq": "^1.0.1",
     "useragent": "^2.3.0",
     "validator": "^10.4.0"

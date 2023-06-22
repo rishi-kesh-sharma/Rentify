@@ -2,7 +2,7 @@ const objectToFormData = (obj, form, namespace) => {
   if (typeof obj !== 'object') return;
   const fd = form || new FormData();
   let formKey;
-  Object.keys(obj).map(property => {
+  Object.keys(obj).map((property) => {
     // for (let property in obj) {
     if (obj[property] !== null && obj[property] !== undefined) {
       if (!(obj[property] instanceof File)) {

@@ -15,7 +15,6 @@ import * as mapDispatchToProps from './actions';
 
 const App = (props) => {
   useInjectSaga({ key: 'global', saga });
-  console.log(props);
 
   const handleClose = () => {
     props.setExpired(false);

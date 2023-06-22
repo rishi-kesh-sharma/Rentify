@@ -5,7 +5,7 @@ const { getSetting } = require('./settings.helper');
 const sendMail = {};
 
 sendMail.send = async (mailOptions, next) => {
-  const emailChannel = await getSetting('email', 'channel', 'channel');
+  const emailChannel = await getSetting('email', 'email', 'channel');
   let mailgun;
   if (emailChannel === 'mailgun') {
     const mailgun_api_key = await getSetting('email', 'mailgun', 'api_key');

@@ -1,0 +1,2571 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Rentify API",
+    "version": "1.0.0",
+    "description": "API for Rental Platform"
+  },
+
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operations related to users"
+    },
+    {
+      "name": "Blogs",
+      "description": "Operations related to blogs"
+    },
+    {
+      "name": "RentPosts",
+      "description": "Endpoints for managing Rent Posts"
+    }
+  ],
+
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Check mail",
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/mfa": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get multi-factor authentication status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/mfa/email": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update email multi-factor authentication status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailMultiFAInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email multi-factor authentication updated successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/mfa/ga": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update Google Authenticator multi-factor authentication status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleAuthenticatorMultiFAInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Google Authenticator multi-factor authentication updated successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/mfa/ga/verify": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Verify Google Authenticator multi-factor authentication",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleAuthenticatorVerificationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Google Authenticator multi-factor authentication verified successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/grby": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Check if user is returning or new (for admin)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/detail/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user detail",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "default": "5c3b244f9ef510172cd1dcb0",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update user detail",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDetailInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User detail updated successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/change": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update basic information of user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserBasicInfoInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User information updated successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/changepw": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update user password",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserPasswordInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User password updated successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register a new user",
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistrationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/login/google/": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user using Google",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleLoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/login/facebook/": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user using Facebook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FacebookLoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/login/github/": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user using GitHub",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GithubLoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/register/admin": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register a new user by admin",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUserRegistrationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/verifymail": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Verify user email",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailVerificationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email verified successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/verifymail/resend": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Resend email verification code",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendVerificationCodeInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification code resent successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Logout user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged out successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/resetpw": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Reset user password",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset request processed successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/blog/auth": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get authorized blogs",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get non-authorized blogs",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/public": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get unauthorized blogs",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/highlight": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get highlighted blogs",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/latest": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get latest blogs",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/showcase": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get showcase blogs",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/trending": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get trending blogs",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/latest/{cat_id}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get latest blogs by category",
+        "parameters": [
+          {
+            "name": "cat_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/related/{slug_url}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get related blogs by slug",
+        "parameters": [
+          {
+            "name": "slug_url",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/category": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blog categories",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/category/active": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get active blog categories",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/category/{id}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blog category by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/blog/{slug_url}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blog by slug",
+        "parameters": [
+          {
+            "name": "slug_url",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/blogbyid/{id}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blog by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/blogbycat/{slug_url}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blogs by category",
+        "parameters": [
+          {
+            "name": "slug_url",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/blogbytag/{tag}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blogs by tag",
+        "parameters": [
+          {
+            "name": "tag",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/blogbyauthor/{author}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blogs by author",
+        "parameters": [
+          {
+            "name": "author",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/blogbytime": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blog archives",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/blogbytime/{time}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get blogs by date",
+        "parameters": [
+          {
+            "name": "time",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog": {
+      "post": {
+        "tags": ["Blogs"],
+        "summary": "Save a blog",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/category": {
+      "post": {
+        "tags": ["Blogs"],
+        "summary": "Save a blog category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogCategory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/{id}": {
+      "delete": {
+        "tags": ["Blogs"],
+        "summary": "Delete a blog",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/category/{id}": {
+      "delete": {
+        "tags": ["Blogs"],
+        "summary": "Delete a blog category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/htmlblog/{id}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Get static blog by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/count/increase/{id}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Increase view count",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/count/category/{id}": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "Count blogs by category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/multiple/blog": {
+      "post": {
+        "tags": ["Blogs"],
+        "summary": "Select multiple blog data",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blog/multiple/category": {
+      "post": {
+        "tags": ["Blogs"],
+        "summary": "Select multiple blog category data",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rentPost/auth": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Post (Authorized)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/rentPost/public": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Post (Unauthorize)",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/highlight": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Highlight Rent Post",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/latest": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Latest Rent Post",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/showcase": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Showcase Rent Post",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/trending": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Trending Rent Post",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/latest/{cat_id}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Latest Rent Post by Category",
+        "parameters": [
+          {
+            "name": "cat_id",
+            "in": "path",
+            "description": "Category ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/related/{slug_url}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Related Rent Post",
+        "parameters": [
+          {
+            "name": "slug_url",
+            "in": "path",
+            "description": "Slug URL",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/": {
+      "post": {
+        "tags": ["RentPosts"],
+        "summary": "Save Rent Post",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentPost"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Example Request Body",
+                  "value": {
+                    "title": "Sample Title",
+                    "description": "Sample Description",
+                    "short_description": "Sample Short Description",
+                    "meta_tag": ["sample", "tag"],
+                    "meta_description": "Sample Meta Description",
+                    "tags": ["tag1", "tag2"],
+                    "posted_by": "5c3b244f9ef510172cd1dcb0",
+                    "keywords": ["keyword1", "keyword2"],
+                    "slug_url": "sample-url",
+                    "location": {
+                      "province": "Sample Province",
+                      "district": "Sample District",
+                      "municipality": "Sample Municipality",
+                      "area": "Sample Area"
+                    },
+                    "map_iframe": "Sample Map Iframe",
+                    "price": 1000,
+                    "frequency": "per month",
+                    "situated_floor": 2,
+                    "near_by_places": ["place1", "place2"],
+                    "is_available": true,
+                    "amenities": ["amenity1", "amenity2"],
+                    "sub_category": "",
+                    "category": "",
+                    "published_on": "2023-06-16T00:00:00Z",
+                    "is_published": true,
+                    "is_highlight": false,
+                    "is_showcase": false,
+                    "is_active": false,
+                    "image": "6465fd182a1ce8183c28cc4c",
+                    "is_deleted": false
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/{slug_url}": {
+      "put": {
+        "tags": ["RentPosts"],
+        "summary": "Update Rent Post",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug_url",
+            "in": "path",
+            "description": "Slug URL",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentPost"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Example Request Body",
+                  "value": {
+                    "title": "Updated Title",
+                    "description": "Updated Description",
+                    "short_description": "Updated Short Description",
+                    "meta_tag": ["updated", "tag"],
+                    "meta_description": "Updated Meta Description",
+                    "tags": ["updated-tag1", "updated-tag2"],
+                    "posted_by": ["updated-user1", "updated-user2"],
+                    "keywords": ["updated-keyword1", "updated-keyword2"],
+                    "slug_url": "updated-url",
+                    "likes": ["updated-user1", "updated-user2"],
+                    "saves": ["updated-user1", "updated-user2"],
+                    "location": {
+                      "province": "Updated Province",
+                      "district": "Updated District",
+                      "municipality": "Updated Municipality",
+                      "area": "Updated Area"
+                    },
+                    "map_iframe": "Updated Map Iframe",
+                    "price": 2000,
+                    "frequency": "per year",
+                    "situated_floor": 3,
+                    "near_by_places": ["updated-place1", "updated-place2"],
+                    "is_available": false,
+                    "amenities": ["updated-amenity1", "updated-amenity2"],
+                    "category": ["updated-category1", "updated-category2"],
+                    "published_on": "2023-06-16T00:00:00Z",
+                    "is_published": true,
+                    "is_highlight": false,
+                    "is_showcase": false,
+                    "is_active": false,
+                    "image": "6465fd182a1ce8183c28cc4c",
+                    "is_deleted": false,
+                    "deleted_at": "2023-06-16T00:00:00Z",
+                    "deleted_by": "updated-user1",
+                    "added_by": "updated-user1",
+                    "added_at": "2023-06-16T00:00:00Z",
+                    "updated_by": "updated-user2",
+                    "updated_at": "2023-06-16T00:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost": {
+      "delete": {
+        "tags": ["RentPosts"],
+        "summary": "Delete Rent Post",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug_url",
+            "in": "path",
+            "description": "Slug URL",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Post (Non-Authorized)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/rentPost/count/increase/{id}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Increase View Count",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Rent Post ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/count/category/{id}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Count Rent Posts by Category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/multiple/rentPost": {
+      "post": {
+        "tags": ["RentPosts"],
+        "summary": "Select Multiple Rent Posts",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rentPostIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "rentPostIds": ["rentPostId1", "rentPostId2"]
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/multiple/category": {
+      "post": {
+        "tags": ["RentPosts"],
+        "summary": "Select Multiple Rent Post Categories",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoryIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "categoryIds": ["categoryId1", "categoryId2"]
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/rentPost/rentPostByTag/{tag}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Posts by Tag",
+        "parameters": [
+          {
+            "name": "tag",
+            "in": "path",
+            "description": "Tag",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/rentPostByCreator/{creator}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Posts by Creator",
+        "parameters": [
+          {
+            "name": "creator",
+            "in": "path",
+            "description": "Creator",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/rentPostByTime": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Posts by Time",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/rentPostByTime/{time}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Posts by Date",
+        "parameters": [
+          {
+            "name": "time",
+            "in": "path",
+            "description": "Time",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/rentPost/category/active": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Active Rent Post Categories",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/category/{id}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Post Category by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/rentPost/{slug_url}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Post by Slug URL",
+        "parameters": [
+          {
+            "name": "slug_url",
+            "in": "path",
+            "description": "Slug URL",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/rentPostById/{id}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Post by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Rent Post ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/rentPostByCat/{slug_url}": {
+      "get": {
+        "tags": ["RentPosts"],
+        "summary": "Get Rent Posts by Category",
+        "parameters": [
+          {
+            "name": "slug_url",
+            "in": "path",
+            "description": "Category Slug URL",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/rentPost/category": {
+      "post": {
+        "tags": ["RentPosts"],
+        "summary": "Create Rent Post Category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Rent Post Category object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentPostCategory"
+              }
+            },
+            "examples": {
+              "example1": {
+                "summary": "rent post category request body",
+                "value": {
+                  "title": "Default Category",
+                  "description": "Default category for rent posts",
+                  "is_active": true,
+                  "slug_url": "room",
+                  "image": "6465fd182a1ce8183c28cc4c",
+                  "key": "key"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/rentPost/sub_category": {
+      "post": {
+        "tags": ["RentPosts"],
+        "summary": "Create Rent Post Subcategory",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Rent Post Subcategory object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentPostSubCategory"
+              }
+            }
+          },
+          "examples": {
+            "example1": {
+              "value": {
+                "title": "Default Subcategory",
+                "description": "Default subcategory for rent posts",
+                "is_active": true,
+                "slug_url": "room",
+                "image": "6465fd182a1ce8183c28cc4c",
+                "category": "648c91f80afa2e2fdc699534",
+                "key": "key"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "UserInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "email", "password"]
+      },
+      "EmailMultiFAInput": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": ["enabled"]
+      },
+      "GoogleAuthenticatorMultiFAInput": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": ["enabled"]
+      },
+      "GoogleAuthenticatorVerificationInput": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": ["code"]
+      },
+      "UpdateUserDetailInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "roles": {
+            "type": "array",
+            "default": ["6489897042316d3dc44e2811"]
+          }
+        },
+        "required": ["name", "email"]
+      },
+      "UpdateUserBasicInfoInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "_id": {
+            "type": "string",
+            "default": "5c3b244f9ef510172cd1dcb0"
+          },
+          "roles": {
+            "type": "array",
+            "default": ["6489897042316d3dc44e2811"]
+          }
+        },
+        "required": ["name"]
+      },
+      "UpdateUserPasswordInput": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string", "default": "5c3b244f9ef510172cd1dcb0" },
+          "name": { "type": "string", "default": "Rishikesh Sharma" },
+          "email": { "type": "string", "format": "email", "default": "admin@waftengine.org" },
+          "roles": {
+            "type": "array",
+            "default": ["6489897042316d3dc44e2811"]
+          },
+          "password": {
+            "type": "string",
+            "default": "Test@1234"
+          }
+        },
+        "required": ["currentPassword", "newPassword"]
+      },
+      "UserRegistrationInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "email", "password"]
+      },
+      "GoogleLoginInput": {
+        "type": "object",
+        "properties": {
+          "idToken": {
+            "type": "string"
+          }
+        },
+        "required": ["idToken"]
+      },
+      "FacebookLoginInput": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        },
+        "required": ["accessToken"]
+      },
+      "GithubLoginInput": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": ["code"]
+      },
+      "AdminUserRegistrationInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["admin", "user"]
+          }
+        },
+        "required": ["name", "email", "password", "role"]
+      },
+      "EmailVerificationInput": {
+        "type": "object",
+        "properties": {
+          "verificationCode": {
+            "type": "string"
+          }
+        },
+        "required": ["verificationCode"]
+      },
+      "ResendVerificationCodeInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": ["email"]
+      },
+      "UserLoginInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "default": "admin@waftengine.org"
+          },
+          "password": {
+            "type": "string",
+            "default": "Test@1234"
+          }
+        },
+        "required": ["email", "password"]
+      },
+      "ResetPasswordInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": ["email"]
+      },
+      "Blog": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "short_description": {
+            "type": "string"
+          },
+          "meta_tag": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "meta_description": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "author": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "slug_url": {
+            "type": "string"
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "published_on": {
+            "type": "string",
+            "format": "date-time",
+            "default": "2023-06-14T00:00:00.000Z"
+          },
+          "is_published": {
+            "type": "boolean",
+            "required": true,
+            "default": true
+          },
+          "is_highlight": {
+            "type": "boolean",
+            "default": false
+          },
+          "is_showcase": {
+            "type": "boolean",
+            "default": false
+          },
+          "is_active": {
+            "type": "boolean",
+            "required": true,
+            "default": false
+          },
+          "image": {
+            "type": "string"
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "required": true,
+            "default": false
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time",
+            "default": "2023-06-14T00:00:00.000Z"
+          },
+          "deleted_by": {
+            "type": "string"
+          },
+          "added_by": {
+            "type": "string"
+          },
+          "added_at": {
+            "type": "string",
+            "format": "date-time",
+            "default": "2023-06-14T00:00:00.000Z"
+          },
+          "updated_by": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "default": "2023-06-14T00:00:00.000Z"
+          }
+        }
+      },
+      "BlogCategory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "slug_url": {
+            "type": "string"
+          },
+          "is_active": {
+            "type": "boolean",
+            "required": true,
+            "default": false
+          }
+        }
+      },
+      "RentPost": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "short_description": {
+            "type": "string"
+          },
+          "meta_tag": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "meta_description": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "posted_by": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "slug_url": {
+            "type": "string"
+          },
+          "likes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "saves": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "province": {
+                "type": "string"
+              },
+              "district": {
+                "type": "string"
+              },
+              "municipality": {
+                "type": "string"
+              },
+              "area": {
+                "type": "string"
+              }
+            }
+          },
+          "map_iframe": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "frequency": {
+            "type": "string",
+            "enum": ["per year", "per month", "per quarter"]
+          },
+          "situated_floor": {
+            "type": "number"
+          },
+          "near_by_places": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "is_available": {
+            "type": "boolean",
+            "default": true
+          },
+          "amenities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "string"
+          },
+          "sub_category": {
+            "type": "string"
+          },
+          "published_on": {
+            "type": "string",
+            "format": "date-time",
+            "default": "2023-06-16T00:00:00Z"
+          },
+          "is_published": {
+            "type": "boolean",
+            "default": true,
+            "required": true
+          },
+          "is_highlight": {
+            "type": "boolean",
+            "default": false
+          },
+          "is_showcase": {
+            "type": "boolean",
+            "default": false
+          },
+          "is_active": {
+            "type": "boolean",
+            "required": true,
+            "default": false
+          },
+          "image": {
+            "$ref": "#/components/schemas/File"
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "required": true,
+            "default": false
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "File": {
+        "type": "string"
+      },
+      "RentPostCategory": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "is_active": {
+            "type": "boolean"
+          },
+          "image": {
+            "type": "string"
+          },
+          "slug_url": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          }
+        }
+      },
+      "RentPostSubCategory": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "is_active": {
+            "type": "boolean"
+          },
+          "image": {
+            "type": "string"
+          },
+          "slug_url": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

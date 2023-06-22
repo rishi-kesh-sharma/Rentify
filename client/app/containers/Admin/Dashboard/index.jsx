@@ -114,7 +114,7 @@ const Dashboard = (props) => {
     <>
       <PageHeader title="Dashboard" />
 
-      <>
+      {/* <>
         {info.map((each) => (
           <Panel
             key={each._id}
@@ -122,7 +122,7 @@ const Dashboard = (props) => {
             body={<div dangerouslySetInnerHTML={{ __html: each.detail }} />}
           />
         ))}
-      </>
+      </> */}
       <PageContent>
         <div className="grid grid-cols-3 gap-4">
           <div className="border bg-white rounded">

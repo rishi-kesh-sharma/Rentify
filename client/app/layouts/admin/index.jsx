@@ -62,9 +62,6 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
             <Link target="_blank" to="/">
               <img className="h-8" src={Logo} alt={APP_NAME} />
             </Link>
-            <p className="text-xs text-white opacity-25 leading-none ml-2">
-              v2.0.0
-            </p>
           </div>
 
           <MainListItems />
@@ -80,36 +77,8 @@ const AdminLayout = ({ classes, logoutRequest: logout, roles, users }) => {
                 Visit Site
                 <FaExternalLinkAlt className="ml-2 text-xs" />
               </Link>
-              <a
-                className="pl-8 text-sm"
-                target="_blank"
-                href="https://waftengine.org/documentation/2019-6-16-introduction-to-waftengine"
-              >
-                Docs
-              </a>
-              <a
-                className="pl-8 text-sm"
-                target="_blank"
-                href="https://waftengine.org/blog"
-              >
-                Blog
-              </a>
-              <a
-                className="pl-8 text-sm"
-                target="_blank"
-                href="https://gitter.im/waftengine/community"
-              >
-                Support
-              </a>
-              <div className="flex-1 text-center -mt-6">
-                <a
-                  className="py-1 px-4 text-sm inline-block bg-yellow-100 border border-yellow-200 rounded-b-lg"
-                  href="https://github.com/WaftTech/WaftEngine"
-                  target={'_blank'}
-                >
-                  Give ⭐ on Github
-                </a>
-              </div>
+
+              <div className="flex-1 text-center -mt-6"></div>
             </div>
 
             <DropdownMenu

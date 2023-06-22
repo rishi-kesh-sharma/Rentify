@@ -4,7 +4,6 @@ import objectToFormData from './objectToFormData';
 import request from './request';
 
 const API_BASE = import.meta.env.VITE_API_BASE;
-
 class Api {
   /**
    * Generic api data loader

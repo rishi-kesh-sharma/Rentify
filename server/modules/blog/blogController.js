@@ -114,7 +114,7 @@ blogController.getShowcaseBlog = async (req, res, next) => {
       .sort({ published_on: -1 })
       .skip(0)
       .limit(5);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog get success!', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Showcase Blog get success!', null);
   } catch (err) {
     next(err);
   }
@@ -883,33 +883,28 @@ blogController.GetBlogCategoryActive = async (req, res, next) => {
   }
 };
 
-
 blogController.selectMultipleDataBlog = async (req, res, next) => {
   const { blog_id, type } = req.body;
 
   if (type == 'is_published') {
-    const Data = await blogSch.updateMany(
-      { _id: { $in: blog_id } },
-      [{
+    const Data = await blogSch.updateMany({ _id: { $in: blog_id } }, [
+      {
         $set: {
-          is_published: { $not: "$is_published" }
+          is_published: { $not: '$is_published' },
         },
-      }],
-    );
+      },
+    ]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
-  }
-  else if (type == 'is_active') {
-    const Data = await blogSch.updateMany(
-      { _id: { $in: blog_id } },
-      [{
+  } else if (type == 'is_active') {
+    const Data = await blogSch.updateMany({ _id: { $in: blog_id } }, [
+      {
         $set: {
-          is_active: { $not: "$is_active" }
+          is_active: { $not: '$is_active' },
         },
-      }],
-    );
+      },
+    ]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
-  }
-  else {
+  } else {
     const Data = await blogSch.updateMany(
       { _id: { $in: blog_id } },
       {
@@ -920,25 +915,22 @@ blogController.selectMultipleDataBlog = async (req, res, next) => {
       },
     );
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
-  };
+  }
 };
-
 
 blogController.selectMultipleDataCat = async (req, res, next) => {
   const { blog_category_id, type } = req.body;
 
   if (type == 'is_active') {
-    const Data = await blogCatSch.updateMany(
-      { _id: { $in: blog_category_id } },
-      [{
+    const Data = await blogCatSch.updateMany({ _id: { $in: blog_category_id } }, [
+      {
         $set: {
-          is_active: { $not: "$is_active" }
+          is_active: { $not: '$is_active' },
         },
-      }],
-    );
+      },
+    ]);
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Status Change Success', null);
-  }
-  else {
+  } else {
     const Data = await blogCatSch.updateMany(
       { _id: { $in: blog_category_id } },
       {
@@ -949,7 +941,7 @@ blogController.selectMultipleDataCat = async (req, res, next) => {
       },
     );
     return otherHelper.sendResponse(res, httpStatus.OK, true, Data, null, 'Multiple Data Delete Success', null);
-  };
+  }
 };
 
 module.exports = blogController;

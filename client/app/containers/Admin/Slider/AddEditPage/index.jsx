@@ -401,7 +401,7 @@ const AddEdit = (props) => {
         <div>
           <SortableImageList
             items={one.images}
-            _this={this}
+            _this={globalThis}
             onSortEnd={onImageSortEnd}
             useDragHandle
             handleEditorChange={handleEditorChange}

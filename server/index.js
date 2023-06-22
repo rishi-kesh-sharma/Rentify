@@ -8,7 +8,7 @@ const http = require('http');
 const app = require('./app');
 const port = process.env.PORT || 5050;
 const env = process.env.ENV || 'Development';
-const app_name = process.env.APP_NAME || 'Waft Engine Server';
+const app_name = process.env.APP_NAME || 'Rentify Server';
 const server = http.createServer(app);
 
 app.set('PORT_NUMBER', port);
@@ -20,13 +20,7 @@ server.listen(port, () => {
   console.log('| Server       : ' + app_name);
   console.log('| Environment  : ' + env);
   console.log('| Port         : ' + port);
-  console.log(
-    '| Date         : ' +
-      data
-        .toJSON()
-        .split('T')
-        .join(' '),
-  );
+  console.log('| Date         : ' + data.toJSON().split('T').join(' '));
   console.log('|--------------------------------------------');
   console.log('| Waiting For Database Connection ');
 });

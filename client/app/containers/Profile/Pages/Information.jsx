@@ -96,20 +96,18 @@ const UserPersonalInformationPage = (props) => {
             />
             <div className="error">{errors.name}</div>
           </div>
-
           <div className="md:w-1/2 pb-4">
             <label>Email</label>
             <input
               className="inputbox"
               id="email"
-              type="text"
+              type="email"
               name="Email"
               value={one.email || ''}
-              onChange={handleChange('name')}
+              onChange={handleChange('email')}
             />
             <div className="error">{errors.email}</div>
           </div>
-
           <div className="md:w-1/2 pb-4">
             <label className="text-sm">Date Of Birth</label>
             <DateInput
@@ -122,7 +120,6 @@ const UserPersonalInformationPage = (props) => {
               birth_date={moment(one.date_of_birth).format('YYYY-MM-D')}
             />
           </div>
-
           <div className="w-full pb-4">
             <div>
               <label className="text-sm">Role :</label>{' '}
@@ -136,7 +133,6 @@ const UserPersonalInformationPage = (props) => {
               ))}
             </div>
           </div>
-
           {/* <div className="w-full  pb-4">
           Your account created at {moment(one.added_at).format(DATE_FORMAT)}
         </div> */}

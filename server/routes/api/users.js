@@ -4,10 +4,9 @@ const passport = require('passport');
 const validateRegisterInput = require('../../modules/user/userValidations');
 
 const loginLogs = require('../../modules/user/loginlogs/loginlogController').loginLogController;
-const uploadHelper = require('../../helper/upload.helper')
+const uploadHelper = require('../../helper/upload.helper');
 const userModule = require('../../modules/user/userController');
 const { authentication, authenticationForLogout, authorization, getClientInfo, isPublicGoogleRegistrationAllow } = require('../../middleware/auth.middleware');
-
 
 router.get('/', authentication, authorization, userModule.GetAllUser);
 router.post('/', userModule.CheckMail);

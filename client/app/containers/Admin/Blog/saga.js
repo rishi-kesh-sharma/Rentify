@@ -188,3 +188,4 @@ export default function* defaultSaga() {
   yield takeLatest(types.DELETE_ONE_SUCCESS, deleteSuccessFunc);
   yield takeLatest(types.DELETE_ONE_FAILURE, deleteFailureFunc);
 }
+

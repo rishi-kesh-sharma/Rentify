@@ -28,6 +28,11 @@ router.use('/bug', bugRoutes);
 // All route of blogs
 const blogRoutes = require('./api/blog');
 router.use('/blog', blogRoutes);
+
+//All route for rent posts
+const rentPostRoutes = require('./api/rentPost.js');
+router.use('/rentPost', rentPostRoutes);
+
 // All route of sliders
 const sliderRoutes = require('./api/slider');
 router.use('/slider', sliderRoutes);

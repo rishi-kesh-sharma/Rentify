@@ -1,5 +1,6 @@
 {
   "name": "client-app",
+  "proxy": "http://localhost:5050",
   "version": "5.0.0",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {

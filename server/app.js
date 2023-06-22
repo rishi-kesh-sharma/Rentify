@@ -17,6 +17,7 @@ const otherHelper = require('./helper/others.helper');
 const { AddErrorToLogs } = require('./modules/bug/bugController');
 const changephoto = require('./helper/photomanipulate').changephoto;
 const { initSettings } = require('./helper/settings.helper');
+
 const app = express();
 // Logger middleware
 app.use(logger('dev'));
@@ -55,7 +56,7 @@ mongoose.Promise = global.Promise;
 
 Promise.resolve(app)
   .then(MongoDBConnection())
-  .catch(err => console.error.bind(console, `MongoDB connection error: ${JSON.stringify(err)}`));
+  .catch((err) => console.error.bind(console, `MongoDB connection error: ${JSON.stringify(err)}`));
 
 // Database Connection
 async function MongoDBConnection() {
@@ -95,19 +96,33 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 const routes = require('./routes/index');
 // Use Routes
 app.use('/api', routes);
 app.use('/public/:w-:h/*', changephoto);
 app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// api docs
+
+const generateToken = () => {
+  const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjM2IyNDRmOWVmNTEwMTcyY2QxZGNiMCIsIm5hbWUiOiJSaXNoaWtlc2ggU2hhcm1hIiwiZW1haWwiOiJhZG1pbkB3YWZ0ZW5naW5lLm9yZyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6W3siX2lkIjoiNWJmN2FlMzY5NGRiMDUxZjU0ODZmODQ1Iiwicm9sZV90aXRsZSI6IlN1cGVyIEFkbWluIn1dLCJpbWFnZSI6eyJmaWVsZG5hbWUiOiJmaWxlIiwib3JpZ2luYWxuYW1lIjoiYmxvZy13ZWJzaXRlLWZhdmljb24tYmxhY2sucG5nIiwiZW5jb2RpbmciOiI3Yml0IiwibWltZXR5cGUiOiJpbWFnZS9wbmciLCJkZXN0aW5hdGlvbiI6InB1YmxpYy91c2VyLyIsImZpbGVuYW1lIjoiRTFGMUZCQTYyNTBCNDE2LWJsb2ctd2Vic2l0ZS1mYXZpY29uLWJsYWNrLnBuZyIsInBhdGgiOiJwdWJsaWNcXHVzZXJcXEUxRjFGQkE2MjUwQjQxNi1ibG9nLXdlYnNpdGUtZmF2aWNvbi1ibGFjay5wbmciLCJzaXplIjoiMzgwNiJ9LCJpYXQiOjE2ODY4MTYwNTAsImV4cCI6MTcyMjgxNjA1MH0.-Q1rhD0DftLbSqVYLbQ_tZ-w508ZUIH1GsHUK2A8pLE`;
+  return token;
+};
+const swaggerOptions = {
+  isExplorer: true,
+  explorer: true,
+};
+const swaggerUI = require('swagger-ui-express');
+const swaggerPath = path.join(__dirname, './swagger');
+const swaggerDocument = require(swaggerPath);
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument, swaggerOptions));
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
 // error handler
 // no stacktraces leaked to user unless in development environment
 app.use((err, req, res, next) => {

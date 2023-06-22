@@ -36,7 +36,7 @@ const ViewSubscriber = (props) => {
     navigate('/admin/subscribe-manage');
   };
 
-  const { one, loading } = this.props;
+  const { one, loading } = globalThis.props;
   return loading && loading == true ? (
     <Loading />
   ) : (
@@ -46,7 +46,7 @@ const ViewSubscriber = (props) => {
       </Helmet>
       <div className="flex justify-between my-3">
         <PageHeader>
-          <span className="backbtn" onClick={this.handleBack}>
+          <span className="backbtn" onClick={globalThis.handleBack}>
             <FaArrowLeft className="text-xl" />
           </span>
           Subscribe Details

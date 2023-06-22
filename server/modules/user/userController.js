@@ -12,20 +12,26 @@ const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
 const loginLogs = require('./loginlogs/loginlogController').internal;
 const { getSetting } = require('../../helper/settings.helper');
+const rentPostSch = require('../rentPost/rentPostSchema');
 
 const userController = {};
 
 userController.PostUser = async (req, res, next) => {
   try {
     let user = req.body;
+    console.log(user);
     if (user && user._id) {
-      const update = await userSch.findByIdAndUpdate(user._id, {
-        $set: user,
-        updated_at: Date.now(),
-      });
+      const update = await userSch.findByIdAndUpdate(
+        user._id,
+        {
+          $set: user,
+          updated_at: Date.now(),
+        },
+        { new: true },
+      );
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user update success!', null);
     } else {
-      user.email = user.email.toLowerCase();
+      user.email = user?.email?.toLowerCase();
       const newUser = new userSch(user);
       const userSave = await newUser.save();
       return otherHelper.sendResponse(res, httpStatus.OK, true, userSave, null, 'user add success!', null);
@@ -43,9 +49,13 @@ userController.PostUserPwd = async (req, res, next) => {
     let salt = await bcrypt.genSalt(10);
     let hashPwd = await bcrypt.hash(req.body.password, salt);
     if (req.body && req.body._id) {
-      const update = await userSch.findByIdAndUpdate(req.body._id, {
-        $set: { password: hashPwd, last_password_change_date: new Date() },
-      });
+      const update = await userSch.findByIdAndUpdate(
+        req.body._id,
+        {
+          $set: { password: hashPwd, last_password_change_date: new Date() },
+        },
+        { new: true },
+      );
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user password update success!', null);
     } else {
       user.password = hashPwd;
@@ -69,7 +79,7 @@ userController.getMultiFAStatus = async (req, res, next) => {
 userController.postEmailFAStatus = async (req, res, next) => {
   try {
     const is_authenticate = req.body.is_authenticate;
-    const user = await userSch.findByIdAndUpdate(req.user.id, { $set: { 'multi_fa.email.is_authenticate': is_authenticate } });
+    const user = await userSch.findByIdAndUpdate(req.user.id, { $set: { 'multi_fa.email.is_authenticate': is_authenticate } }, { new: true });
     return otherHelper.sendResponse(res, httpStatus.OK, true, { is_authenticate: is_authenticate }, null, 'Two FA status', null);
   } catch (err) {
     next(err);
@@ -100,7 +110,7 @@ userController.verifyGoogleFAStatus = async (req, res, next) => {
     if (user.multi_fa.google_authenticate.setup) {
       const otp = await twoFaHelper.verifyMultiFactorAuthCode(code, user.multi_fa.google_authenticate.auth_secret_setup);
       if (otp) {
-        user = await userSch.findByIdAndUpdate(req.user.id, { $set: { 'multi_fa.google_authenticate.is_authenticate': true, 'multi_fa.google_authenticate.setup': false, 'multi_fa.google_authenticate.auth_secret': user.multi_fa.google_authenticate.auth_secret_setup, 'multi_fa.google_authenticate.auth_secret_setup': '' } });
+        user = await userSch.findByIdAndUpdate(req.user.id, { $set: { 'multi_fa.google_authenticate.is_authenticate': true, 'multi_fa.google_authenticate.setup': false, 'multi_fa.google_authenticate.auth_secret': user.multi_fa.google_authenticate.auth_secret_setup, 'multi_fa.google_authenticate.auth_secret_setup': '' } }, { new: true });
         return otherHelper.sendResponse(res, httpStatus.OK, true, { is_authenticate: true }, null, 'Two FA setup success', null);
       } else {
         return otherHelper.sendResponse(res, httpStatus.UNAUTHORIZED, false, { code: 'Code mismatch' }, null, 'Please try another code', null);
@@ -205,6 +215,7 @@ userController.Register = async (req, res, next) => {
     newUser.email_verified_request_date = new Date();
     const user = await newUser.save();
     const public_register_email_template = await getSetting('template', 'email', 'public_register_email_template');
+    // const public_register_email_template = await getSetting('');
     const renderedMail = await renderMail.renderTemplate(
       public_register_email_template,
       {
@@ -227,7 +238,8 @@ userController.Register = async (req, res, next) => {
     return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
   }
 };
-userController.validLoginResponse = async (req, user, next) => {
+userController.
+validLoginResponse = async (req, user, next) => {
   try {
     let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
     let routes = [];
@@ -319,7 +331,7 @@ userController.UpdateUserDetail = async (req, res, next) => {
       newData.image = req.file;
     }
 
-    const updateUser = await userSch.findByIdAndUpdate(id, { $set: newData });
+    const updateUser = await userSch.findByIdAndUpdate(id, { $set: newData }, { new: true });
     const msg = 'User Update Success';
     const msgFail = 'User not found';
 
@@ -541,7 +553,7 @@ userController.Login = async (req, res, next) => {
           responseData.multi_fa.email.is_authenticate = true;
           const two_fa_code = otherHelper.generateRandomHexString(6);
           const two_fa_time = new Date();
-          const d = await userSch.findByIdAndUpdate(user._id, { $set: { 'multi_fa.email.code': two_fa_code, 'multi_fa.email.time': two_fa_time } });
+          const d = await userSch.findByIdAndUpdate(user._id, { $set: { 'multi_fa.email.code': two_fa_code, 'multi_fa.email.time': two_fa_time } }, { new: true });
           const two_fa_email_template = await getSetting('template', 'email', 'two_fa_email_template');
           const renderedMail = await renderMail.renderTemplate(
             two_fa_email_template,
@@ -611,7 +623,7 @@ userController.LoginAfterMultiFa = async (req, res, next) => {
       }
       if (success) {
         const { token, payload } = await userController.validLoginResponse(req, user, next);
-        const d = await userSch.findByIdAndUpdate(user._id, { $unset: { 'multi_fa.email.code': 1, 'multi_fa.email.time': 1 } });
+        const d = await userSch.findByIdAndUpdate(user._id, { $unset: { 'multi_fa.email.code': 1, 'multi_fa.email.time': 1 } }, { new: true });
         return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
       } else {
         return otherHelper.sendResponse(res, httpStatus.BAD_REQUEST, false, null, err, 'Enter Valid Codes', null);
@@ -648,7 +660,7 @@ userController.LoginAfterTwoFaGa = async (req, res, next) => {
       const otp = await twoFaHelper.verifyMultiFactorAuthCode(req.body.code, user.two_fa_ga_auth_secret);
       if (otp) {
         const { token, payload } = await userController.validLoginResponse(req, user, next);
-        const d = await userSch.findByIdAndUpdate(user._id, { $unset: { two_fa_code: 1, two_fa_time: 1 } });
+        const d = await userSch.findByIdAndUpdate(user._id, { $unset: { two_fa_code: 1, two_fa_time: 1 } }, { new: true });
         return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
       } else {
         let errors = { code: 'Incorrect Code' };
@@ -670,6 +682,10 @@ userController.GetProfile = async (req, res, next) => {
   try {
     let populate = [{ path: 'roles', select: '_id role_title' }];
     const userProfile = await userSch.findById(req.user.id, 'image name date_of_birth email added_at email_verified roles is_two_fa ').populate(populate);
+    const likedPosts = await rentPostSch.find({ likes: { $in: [req.user.id] } });
+    userProfile.likedPosts = likedPosts;
+    const savedPosts = await rentPostSch.find({ likes: { $in: [req.user.id] } });
+    userProfile.savedPosts = savedPosts;
     return otherHelper.sendResponse(res, httpStatus.OK, true, userProfile, null, null, null);
   } catch (err) {
     next(err);
@@ -753,6 +769,7 @@ userController.loginGOath = async (req, res, next) => {
 
   const public_register_auth_template = await getSetting('template', 'email', 'public_register_auth_template');
 
+  console.log(profile);
   const renderedMail = await renderMail.renderTemplate(
     public_register_auth_template,
     {

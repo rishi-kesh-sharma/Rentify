@@ -21,7 +21,6 @@ if (tokenWithBearer) {
         decoded.exp > Date.now() / 1000
       )
     ) {
-      console.log('expired');
       localStorage.removeItem('token');
     } else {
       const routes = JSON.parse(localStorage.getItem('routes'));
