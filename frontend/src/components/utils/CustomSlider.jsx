@@ -1,9 +1,9 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+const"slick-carousel/slick/slick.css";
+const"slick-carousel/slick/slick-theme.css";
 
-import React, { Component } from "react";
-import Slider from "react-slick";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+constReact, { Component } from "react";
+constSlider from "react-slick";
+const{ BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -71,4 +71,4 @@ const CostumSlider = ({ children }) => {
   );
 };
 
-export default CostumSlider;
+module.exports= CostumSlider;

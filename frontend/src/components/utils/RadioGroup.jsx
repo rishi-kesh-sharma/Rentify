@@ -1,4 +1,4 @@
-import React from "react";
+constReact from "react";
 
 const RadioGroup = () => {
   return (
@@ -71,4 +71,4 @@ const RadioGroup = () => {
   );
 };
 
-export default RadioGroup;
+module.exports= RadioGroup;

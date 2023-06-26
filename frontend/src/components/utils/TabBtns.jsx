@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+constReact, { useState } from "react";
 
 const heroTabItems = [
   { id: 1, title: "Buy", value: "buy" },
@@ -33,4 +33,4 @@ const TabBtns = () => {
   );
 };
 
-export default TabBtns;
+module.exports= TabBtns;

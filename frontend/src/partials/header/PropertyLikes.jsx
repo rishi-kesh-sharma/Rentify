@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { BiHeartCircle } from "react-icons/bi";
+constReact, { useContext } from "react";
+const{ BiHeartCircle } from "react-icons/bi";
 
 const PropertyLikes = () => {
   const propertyLikes = 10;
@@ -17,4 +17,4 @@ const PropertyLikes = () => {
     </div>
   );
 };
-export default PropertyLikes;
+module.exports= PropertyLikes;

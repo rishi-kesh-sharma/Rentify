@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
-import { RxCross1 } from "react-icons/rx";
-import RightNavLinks from "./RightNavLinks";
-import ProfileAvatar from "../../components/utils/ProfileAvatar";
-import ProfileToggleNavigation from "../../components/utils/ProfileToggleNavigation";
-import { profileLinks } from "../../data/index";
-import AuthButton from "../../components/utils/AuthButton";
+constReact, { useContext, useState } from "react";
+const{ RxCross1 } from "react-icons/rx";
+constRightNavLinks from "./RightNavLinks";
+constProfileAvatar from "../../components/utils/ProfileAvatar";
+constProfileToggleNavigation from "../../components/utils/ProfileToggleNavigation";
+const{ profileLinks } from "../../data/index";
+constAuthButton from "../../components/utils/AuthButton";
 const ToggleNavigation = ({
   links,
   handleNavLinksClick,
@@ -139,4 +139,4 @@ const ToggleNavigation = ({
   );
 };
 
-export default ToggleNavigation;
+module.exports= ToggleNavigation;

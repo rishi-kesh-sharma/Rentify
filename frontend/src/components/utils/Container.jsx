@@ -1,4 +1,4 @@
-import tw from "tailwind-styled-components";
+consttw from "tailwind-styled-components";
 
 const Container = tw.div`
 h-auto
@@ -7,4 +7,4 @@ mx-auto
 ${({ className }) => className}
 `;
 
-export default Container;
+module.exports= Container;

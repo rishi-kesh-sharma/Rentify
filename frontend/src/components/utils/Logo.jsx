@@ -1,5 +1,5 @@
-import React from "react";
-import Image from "next/image";
+constReact from "react";
+constImage from "next/image";
 const Logo = ({ className, alt, height, width, LogoImage }) => {
   return (
     <Image
@@ -12,4 +12,4 @@ const Logo = ({ className, alt, height, width, LogoImage }) => {
   );
 };
 
-export default Logo;
+module.exports= Logo;

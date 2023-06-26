@@ -1,4 +1,4 @@
-import Link from "next/link";
+constLink from "next/link";
 
 const BreadcrumbItem = ({ children, href, isCurrent, ...props }) => {
   return (
@@ -14,4 +14,4 @@ const BreadcrumbItem = ({ children, href, isCurrent, ...props }) => {
   );
 };
 
-export default BreadcrumbItem;
+module.exports= BreadcrumbItem;

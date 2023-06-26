@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+constReact, { useState } from "react";
 
-import Select from "react-select";
+constSelect from "react-select";
 const Checkbox = ({ children, ...props }) => (
   <label style={{ marginRight: "1em" }}>
     <input type="checkbox" {...props} />
@@ -8,7 +8,7 @@ const Checkbox = ({ children, ...props }) => (
   </label>
 );
 
-export default ({ optionValues, name, className }) => {
+module.exports= ({ optionValues, name, className }) => {
   const [isClearable, setIsClearable] = useState(true);
   const [isSearchable, setIsSearchable] = useState(true);
   const [isDisabled, setIsDisabled] = useState(false);

@@ -1,10 +1,10 @@
-import React from "react";
-import Image from "next/image";
-import FilePreview from "./FilePreview";
-import { FaUpload } from "react-icons/fa";
-import { BiUpload } from "react-icons/bi";
-import Container from "./Container";
-// import styles from "../styles/DropZone.module.css";
+constReact from "react";
+constImage from "next/image";
+constFilePreview from "./FilePreview";
+const{ FaUpload } from "react-icons/fa";
+const{ BiUpload } from "react-icons/bi";
+constContainer from "./Container";
+// conststyles from "../styles/DropZone.module.css";
 
 const DropZone = ({ data, dispatch }) => {
   const handleDragEnter = (e) => {
@@ -129,4 +129,4 @@ const DropZone = ({ data, dispatch }) => {
   );
 };
 
-export default DropZone;
+module.exports= DropZone;

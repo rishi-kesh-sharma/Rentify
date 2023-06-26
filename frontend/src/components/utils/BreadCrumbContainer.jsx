@@ -1,10 +1,10 @@
-import React from "react";
-import Breadcrumb from "@/components/utils/BreadCrumb.jsx";
-import BreadcrumbItem from "@/components/utils/BreadCrumbItem.jsx";
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import { appContext } from "@/pages/_app";
-import Container from "./Container";
+constReact from "react";
+constBreadcrumb from "@/components/utils/BreadCrumb.jsx";
+constBreadcrumbItem from "@/components/utils/BreadCrumbItem.jsx";
+const{ useRouter } from "next/router";
+const{ useContext } from "react";
+const{ appContext } from "@/pages/_app";
+constContainer from "./Container";
 const BreadCrumbContainer = ({ className }) => {
   // USEROUTER
   const router = useRouter();
@@ -31,4 +31,4 @@ const BreadCrumbContainer = ({ className }) => {
   );
 };
 
-export default BreadCrumbContainer;
+module.exports= BreadCrumbContainer;

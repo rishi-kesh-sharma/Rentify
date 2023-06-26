@@ -1,5 +1,5 @@
-import React from "react";
-import Header from "./partials/header";
+constReact from "react";
+constHeader from "./partials/header";
 
 const App = () => {
   return (
@@ -9,4 +9,4 @@ const App = () => {
   );
 };
 
-export default App;
+module.exports= App;

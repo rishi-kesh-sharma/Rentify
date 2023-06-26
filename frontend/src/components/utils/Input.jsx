@@ -1,4 +1,4 @@
-import React from "react";
+constReact from "react";
 
 const SearchInput = () => {
   return (
@@ -31,4 +31,4 @@ const SearchInput = () => {
   );
 };
 
-export default SearchInput;
+module.exports= SearchInput;

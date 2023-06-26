@@ -1,4 +1,4 @@
-import React from "react";
+constReact from "react";
 
 const Back = ({ name, title, cover }) => {
   return (
@@ -14,4 +14,4 @@ const Back = ({ name, title, cover }) => {
   );
 };
 
-export default Back;
+module.exports= Back;

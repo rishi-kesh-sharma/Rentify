@@ -1,7 +1,7 @@
-import React from "react";
-import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
+constReact from "react";
+const{ Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 
-export default function AlertPop(props) {
+module.exports= function AlertPop(props) {
   return (
     <Alert
       my={1}

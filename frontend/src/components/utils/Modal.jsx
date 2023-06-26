@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+constReact, { useEffect } from "react";
 
 const Modal = ({ toggleModal, form }) => {
   return (
@@ -38,4 +38,4 @@ const Modal = ({ toggleModal, form }) => {
   );
 };
 
-export default Modal;
+module.exports= Modal;

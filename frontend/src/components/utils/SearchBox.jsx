@@ -1,5 +1,5 @@
-import React from "react";
-import SearchInput from "./Input";
+constReact from "react";
+constSearchInput from "./Input";
 
 const SearchBox = () => {
   return (
@@ -9,4 +9,4 @@ const SearchBox = () => {
   );
 };
 
-export default SearchBox;
+module.exports= SearchBox;

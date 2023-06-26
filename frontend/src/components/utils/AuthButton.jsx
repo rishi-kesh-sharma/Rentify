@@ -13,4 +13,4 @@ const AuthButton = () => {
   );
 };
 
-export default AuthButton;
+module.exports= AuthButton;

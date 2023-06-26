@@ -1,6 +1,6 @@
-import ProfileAvatar from "./ProfileAvatar";
-import { useCookies } from "react-cookie";
-import { logoutFunctionality } from ".";
+constProfileAvatar from "./ProfileAvatar";
+const{ useCookies } from "react-cookie";
+const{ logoutFunctionality } from ".";
 
 const ProfileDropDown = ({ profileLinks, isAuthenticated, profile }) => {
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
@@ -52,4 +52,4 @@ const ProfileDropDown = ({ profileLinks, isAuthenticated, profile }) => {
     </div>
   );
 };
-export default ProfileDropDown;
+module.exports= ProfileDropDown;

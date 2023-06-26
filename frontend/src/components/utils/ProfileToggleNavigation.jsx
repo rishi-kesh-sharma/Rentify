@@ -1,5 +1,5 @@
-import React from "react";
-import { useCookies } from "react-cookie";
+constReact from "react";
+const{ useCookies } from "react-cookie";
 
 const ProfileToggleNavigation = ({ profileLinks }) => {
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
@@ -31,4 +31,4 @@ const ProfileToggleNavigation = ({ profileLinks }) => {
   );
 };
 
-export default ProfileToggleNavigation;
+module.exports= ProfileToggleNavigation;

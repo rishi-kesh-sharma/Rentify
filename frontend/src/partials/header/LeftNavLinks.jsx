@@ -1,4 +1,4 @@
-import React from "react";
+constReact from "react";
 
 const LeftNavLinks = ({ links, handleNavLinksClick }) => {
   return (
@@ -69,4 +69,4 @@ const LeftNavLinks = ({ links, handleNavLinksClick }) => {
   );
 };
 
-export default LeftNavLinks;
+module.exports= LeftNavLinks;

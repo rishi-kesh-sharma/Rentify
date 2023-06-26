@@ -1,4 +1,4 @@
-import tw from "tailwind-styled-components";
+consttw from "tailwind-styled-components";
 
 const CardContainer = tw.div`
     
@@ -12,4 +12,4 @@ const CardContainer = tw.div`
 
 ${({ className }) => className}
 `;
-export default CardContainer;
+module.exports= CardContainer;

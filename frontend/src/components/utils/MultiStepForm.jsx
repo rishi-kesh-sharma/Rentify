@@ -1,11 +1,11 @@
-// import * as React from "react";
-// import * as ReactDOM from "react-dom";
-// import { Form, FormElement } from "@progress/kendo-react-form";
-// import { Button } from "@progress/kendo-react-buttons";
-// import { Stepper } from "@progress/kendo-react-layout";
+// const* as React from "react";
+// const* as ReactDOM from "react-dom";
+// const{ Form, FormElement } from "@progress/kendo-react-form";
+// const{ Button } from "@progress/kendo-react-buttons";
+// const{ Stepper } from "@progress/kendo-react-layout";
 
 // const MultiStepForm = [AccountDetails, PersonalDetails, PaymentDetails];
-// export const App = () => {
+// module.exports=const App = () => {
 //   const [step, setStep] = React.useState(0);
 //   const [formState, setFormState] = React.useState({});
 //   const [steps, setSteps] = React.useState([
@@ -118,4 +118,4 @@
 //   );
 // };
 
-// export default MultiStepForm;
+// module.exports= MultiStepForm;

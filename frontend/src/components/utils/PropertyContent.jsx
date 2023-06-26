@@ -1,8 +1,8 @@
-import React from "react";
-import styles from "../page/Properties";
-import millify from "millify";
-import { GoVerified } from "react-icons/go";
-import { FcLike } from "react-icons/fc";
+constReact from "react";
+conststyles from "../page/Properties";
+constmillify from "millify";
+const{ GoVerified } from "react-icons/go";
+const{ FcLike } from "react-icons/fc";
 
 const PropertyContent = ({
   property: { category, price, name, location, type },
@@ -48,4 +48,4 @@ const PropertyContent = ({
   );
 };
 
-export default PropertyContent;
+module.exports= PropertyContent;

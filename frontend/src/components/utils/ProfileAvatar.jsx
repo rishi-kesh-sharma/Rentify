@@ -1,4 +1,4 @@
-import React from "react";
+constReact from "react";
 const ProfileAvatar = ({ profile }) => {
   return (
     <div className="flex items-center gap-[0.6rem] cursor-pointer    px-2 py-[0.3rem] rounded-lg hover:bg-gray-100 ">
@@ -18,4 +18,4 @@ const ProfileAvatar = ({ profile }) => {
   );
 };
 
-export default ProfileAvatar;
+module.exports= ProfileAvatar;

@@ -31,4 +31,4 @@ const ImageField = ({ imageHandler, checkFile, selectedFile, className }) => {
     </div>
   );
 };
-export default ImageField;
+module.exports= ImageField;

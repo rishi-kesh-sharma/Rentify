@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FiMenu } from "react-icons/fi";
-import { nav } from "../../data/index";
-import Section from "../../components/utils/Section";
-import Container from "../../components/utils/Container";
-import LeftNavLinks from "./LeftNavLinks";
-import ToggleNavigation from "./ToggleNavigation";
-import RightNavLinks from "./RightNavLinks";
-import SectionWrapper from "../../components/utils/SectionWrapper";
-import "./index.css";
+constReact, { useContext, useEffect, useState } from "react";
+const{ FiMenu } from "react-icons/fi";
+const{ nav } from "../../data/index";
+constSection from "../../components/utils/Section";
+constContainer from "../../components/utils/Container";
+constLeftNavLinks from "./LeftNavLinks";
+constToggleNavigation from "./ToggleNavigation";
+constRightNavLinks from "./RightNavLinks";
+constSectionWrapper from "../../components/utils/SectionWrapper";
+const"./index.css";
 
 const Header = () => {
   // TOGGLE SIDEBAR
@@ -110,4 +110,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+module.exports= Header;

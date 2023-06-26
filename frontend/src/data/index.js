@@ -1,12 +1,12 @@
-import { FcAbout } from "react-icons/fc";
-import { MdArticle, MdContactMail, MdRealEstateAgent } from "react-icons/md";
-import { AiFillHome } from "react-icons/ai";
-import { FaMoneyBillAlt, FaMoneyCheck } from "react-icons/fa";
-import { BsListNested, BsPeopleFill } from "react-icons/bs";
+const{ FcAbout } from "react-icons/fc";
+const{ MdArticle, MdContactMail, MdRealEstateAgent } from "react-icons/md";
+const{ AiFillHome } from "react-icons/ai";
+const{ FaMoneyBillAlt, FaMoneyCheck } from "react-icons/fa";
+const{ BsListNested, BsPeopleFill } from "react-icons/bs";
 
-import Logo from "../assets/images/logo.png";
+constLogo from "../assets/images/logo.png";
 
-export const nav = {
+module.exports=const nav = {
   logo: { image: Logo, path: "/" },
   links: {
     leftLinks: [
@@ -151,7 +151,7 @@ export const nav = {
   },
 };
 
-export const profileLinks = [
+module.exports=const profileLinks = [
   {
     name: "Profile",
     path: "/dashboard/profile",

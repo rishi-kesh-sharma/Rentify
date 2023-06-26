@@ -1,4 +1,4 @@
-import tw from "tailwind-styled-components";
+consttw from "tailwind-styled-components";
 
 const CardContainer = tw.div`
 flex

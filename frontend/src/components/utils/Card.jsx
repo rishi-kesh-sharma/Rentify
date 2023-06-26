@@ -1,4 +1,4 @@
-import tw from "tailwind-styled-components";
+consttw from "tailwind-styled-components";
 
 const Card = tw.div`
  
@@ -20,4 +20,4 @@ lg:min-h-[310px]
  
  ${({ className }) => className}
 `;
-export default Card;
+module.exports= Card;

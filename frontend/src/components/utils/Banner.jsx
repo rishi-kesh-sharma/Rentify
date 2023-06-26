@@ -1,6 +1,6 @@
-import React from "react";
-import { Title, TitleLogo } from "./Title";
-// import { Title, TitleLogo } from "./common/Title";
+constReact from "react";
+const{ Title, TitleLogo } from "./Title";
+// const{ Title, TitleLogo } from "./common/Title";
 
 const Banner = () => {
   return (
@@ -21,4 +21,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+module.exports= Banner;

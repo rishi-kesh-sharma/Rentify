@@ -1,5 +1,5 @@
-import React from "react";
-import { Step, Stepper } from "react-form-stepper";
+constReact from "react";
+const{ Step, Stepper } from "react-form-stepper";
 
 const CustomStepper = ({ activeStep, steps, setPage }) => {
   const handleClick = (e) => {
@@ -36,4 +36,4 @@ const CustomStepper = ({ activeStep, steps, setPage }) => {
   );
 };
 
-export default CustomStepper;
+module.exports= CustomStepper;

@@ -1,6 +1,6 @@
-import React from "react";
-import { MdCancel } from "react-icons/md";
-// import styles from "../styles/FilePreview.module.css";
+constReact from "react";
+const{ MdCancel } from "react-icons/md";
+// conststyles from "../styles/FilePreview.module.css";
 
 const FilePreview = ({ fileData }) => {
   const removeFile = (e) => {
@@ -45,4 +45,4 @@ const FilePreview = ({ fileData }) => {
   );
 };
 
-export default FilePreview;
+module.exports= FilePreview;

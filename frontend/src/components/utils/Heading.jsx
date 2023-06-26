@@ -1,4 +1,4 @@
-import React from "react";
+constReact from "react";
 
 const Heading = ({ title, subtitle }) => {
   return (
@@ -11,4 +11,4 @@ const Heading = ({ title, subtitle }) => {
   );
 };
 
-export default Heading;
+module.exports= Heading;

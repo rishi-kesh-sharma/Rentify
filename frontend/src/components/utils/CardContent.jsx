@@ -1,4 +1,4 @@
-import tw from "tailwind-styled-components";
+consttw from "tailwind-styled-components";
 
 const CardContent = tw.div`
  flex
@@ -8,4 +8,4 @@ const CardContent = tw.div`
  
  
 `;
-export default CardContent;
+module.exports= CardContent;

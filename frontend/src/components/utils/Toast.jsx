@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";
+constSwal from "sweetalert2";
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -11,4 +11,4 @@ const Toast = Swal.mixin({
   },
 });
 
-export default Toast;
+module.exports= Toast;

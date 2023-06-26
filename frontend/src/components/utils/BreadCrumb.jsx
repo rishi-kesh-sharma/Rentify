@@ -1,7 +1,7 @@
-import { Children } from "react";
-import { Fragment } from "react";
-import Container from "./Container";
-import Section from "./Section";
+const{ Children } from "react";
+const{ Fragment } from "react";
+constContainer from "./Container";
+constSection from "./Section";
 
 const Breadcrumb = ({ children }) => {
   const childrenArray = Children.toArray(children);
@@ -29,4 +29,4 @@ const Breadcrumb = ({ children }) => {
   );
 };
 
-export default Breadcrumb;
+module.exports= Breadcrumb;

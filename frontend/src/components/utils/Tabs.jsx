@@ -1,6 +1,6 @@
-import { useState } from "react";
+const{ useState } from "react";
 
-export default function TabsComponent({
+module.exports= function TabsComponent({
   tabBtns,
   openTab,
   setOpenTab,

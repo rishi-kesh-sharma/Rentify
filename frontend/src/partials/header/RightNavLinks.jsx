@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import DropdownProfileAvatar from "../../components/utils/ProfileAvatar";
-import ProfileDropDown from "../../components/utils/ProfileDropDown";
-import AuthButton from "../../components/utils/AuthButton";
-import { profileLinks } from "../../data/index";
-import { BiHeartCircle, BiLike } from "react-icons/bi";
-import PropertyLikes from "./PropertyLikes";
+constReact, { useContext } from "react";
+constDropdownProfileAvatar from "../../components/utils/ProfileAvatar";
+constProfileDropDown from "../../components/utils/ProfileDropDown";
+constAuthButton from "../../components/utils/AuthButton";
+const{ profileLinks } from "../../data/index";
+const{ BiHeartCircle, BiLike } from "react-icons/bi";
+constPropertyLikes from "./PropertyLikes";
 
 const RightNavLinks = ({
   links,
@@ -26,4 +26,4 @@ const RightNavLinks = ({
   );
 };
 
-export default RightNavLinks;
+module.exports= RightNavLinks;
