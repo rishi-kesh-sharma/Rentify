@@ -7,6 +7,7 @@ const { notfound, errorHandler } = require("./middleware/error.js");
 const connectDB = require("./config/db.js");
 const userRoutes = require("./routes/user.js");
 const authRoutes = require("./routes/auth.js");
+const contactRoutes = require("./routes/contact.js");
 const { authenticate } = require("./middleware/auth.js");
 
 connectDB();
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 // user routes
 // app.use("/api/user", authenticate, userRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/contact", contactRoutes);
 
 app.use(notfound);
 app.use(errorHandler);

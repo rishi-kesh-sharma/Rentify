@@ -3,19 +3,19 @@ const contactSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      reqired: true,
+      required: true,
     },
     email: {
       type: String,
-      reqired: true,
+      required: true,
     },
     subject: {
       type: String,
-      reqired: true,
+      required: true,
     },
     body: {
       type: String,
-      reqired: true,
+      required: true,
     },
   },
   {
