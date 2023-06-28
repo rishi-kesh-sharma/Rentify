@@ -7,6 +7,7 @@ const { notfound, errorHandler } = require("./middleware/error.js");
 const connectDB = require("./config/db.js");
 const userRoutes = require("./routes/user.js");
 const authRoutes = require("./routes/auth.js");
+const rentRoutes = require("./routes/rent.js");
 const contactRoutes = require("./routes/contact.js");
 const { authenticate } = require("./middleware/auth.js");
 
@@ -22,7 +23,7 @@ app.use("/api/auth", authRoutes);
 // app.use("/api/user", authenticate, userRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/contact", contactRoutes);
-
+app.use("/api/rent", rentRoutes);
 app.use(notfound);
 app.use(errorHandler);
 
