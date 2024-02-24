@@ -143,6 +143,25 @@ validations.validateUpdateUserProfile = (req, res, next) => {
   const data = req.body;
   const validateArray = [
     {
+      field: 'email',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.nameLength,
+          option: { min: 2, max: 30 },
+        },
+        {
+          condition: 'IsEmail',
+          msg: config.validate.isEmail,
+          option: { min: 2, max: 30 },
+        },
+      ],
+    },
+    {
       field: 'name',
       validate: [
         {
@@ -413,6 +432,34 @@ validations.validateAdd = (req, res, next) => {
         {
           condition: 'IsEmpty',
           msg: config.validate.empty,
+        },
+      ],
+    },
+    {
+      field: 'old_password',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.pwLength,
+          option: { min: 6, max: 100 },
+        },
+      ],
+    },
+    {
+      field: 'confirm_password',
+      validate: [
+        {
+          condition: 'IsEmpty',
+          msg: config.validate.empty,
+        },
+        {
+          condition: 'IsLength',
+          msg: config.validate.pwLength,
+          option: { min: 6, max: 100 },
         },
       ],
     },

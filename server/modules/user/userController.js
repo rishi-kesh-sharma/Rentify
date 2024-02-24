@@ -12,10 +12,8 @@ const accessSch = require('../role/accessSchema');
 const moduleSch = require('../role/moduleSchema');
 const loginLogs = require('./loginlogs/loginlogController').internal;
 const { getSetting } = require('../../helper/settings.helper');
-const rentPostSch = require('../rentPost/rentPostSchema');
-
+const rentSch = require('../rent/rentSchema');
 const userController = {};
-
 userController.PostUser = async (req, res, next) => {
   try {
     let user = req.body;
@@ -40,13 +38,22 @@ userController.PostUser = async (req, res, next) => {
     next(err);
   }
 };
-
 userController.PostUserPwd = async (req, res, next) => {
   try {
     let user = {};
-    const { email, name, email_verified, roles, bio } = req.body;
+    const { email, name, email_verified, roles, bio, confirm_password, old_password } = req.body;
     user = { email: email.toLowerCase(), name, email_verified, roles, bio };
     let salt = await bcrypt.genSalt(10);
+    if (confirm_password != req.body.password) {
+      return otherHelper.sendResponse(res, httpStatus.UNAUTHORIZED, false, null, { password: 'password and confirm password must be same!', confirm_password: 'password and confirm password must be same!' }, 'password and confirm password must be same!', null);
+    }
+
+    let dbUser = await userSch.findOne({ email });
+    const isPasswordMatched = await bcrypt.compare(old_password, dbUser.password);
+    console.log(isPasswordMatched);
+    if (!isPasswordMatched) {
+      return otherHelper.sendResponse(res, httpStatus.UNAUTHORIZED, false, null, { old_password: 'old password not matching' }, 'Old password not matching!', null);
+    }
     let hashPwd = await bcrypt.hash(req.body.password, salt);
     if (req.body && req.body._id) {
       const update = await userSch.findByIdAndUpdate(
@@ -56,6 +63,7 @@ userController.PostUserPwd = async (req, res, next) => {
         },
         { new: true },
       );
+      console.log(update);
       return otherHelper.sendResponse(res, httpStatus.OK, true, update, null, 'user password update success!', null);
     } else {
       user.password = hashPwd;
@@ -238,8 +246,7 @@ userController.Register = async (req, res, next) => {
     return otherHelper.sendResponse(res, httpStatus.OK, true, payload, null, null, token);
   }
 };
-userController.
-validLoginResponse = async (req, user, next) => {
+userController.validLoginResponse = async (req, user, next) => {
   try {
     let accesses = await accessSch.find({ role_id: user.roles, is_active: true }, { access_type: 1, _id: 0 });
     let routes = [];
@@ -267,6 +274,7 @@ validLoginResponse = async (req, user, next) => {
       is_two_fa: user.is_two_fa,
       image: user.image,
     };
+
     // Sign Token
     let token = await jwt.sign(payload, secretOrKey, {
       expiresIn: tokenExpireTime,
@@ -457,7 +465,7 @@ userController.ForgotPassword = async (req, res, next) => {
     if (user.password_reset_request_date) {
       const diff = parseInt((currentDate - user.password_reset_request_date) / (1000 * 60)); //in minute
       if (diff < 10) {
-        return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Email Already Sent, Check your Inbox', null);
+        return otherHelper.sendResponse(res, httpStatus.OK, true, { email }, null, 'Code Already Sent, Check your Inbox', null);
       }
     }
     user.password_reset_code = otherHelper.generateRandomHexString(6);
@@ -482,7 +490,6 @@ userController.ForgotPassword = async (req, res, next) => {
       },
       user.email,
     );
-
     if (renderMail.error) {
       console.log('render mail error: ', renderMail.error);
     } else {
@@ -677,32 +684,32 @@ userController.LoginAfterTwoFaGa = async (req, res, next) => {
 userController.Info = (req, res, next) => {
   return otherHelper.sendResponse(res, httpStatus.OK, true, req.user, null, null, null);
 };
-
 userController.GetProfile = async (req, res, next) => {
+  const current_date = new Date();
   try {
     let populate = [{ path: 'roles', select: '_id role_title' }];
-    const userProfile = await userSch.findById(req.user.id, 'image name date_of_birth email added_at email_verified roles is_two_fa ').populate(populate);
-    const likedPosts = await rentPostSch.find({ likes: { $in: [req.user.id] } });
-    userProfile.likedPosts = likedPosts;
-    const savedPosts = await rentPostSch.find({ likes: { $in: [req.user.id] } });
-    userProfile.savedPosts = savedPosts;
+    let userProfile = await userSch.findById(req.user.id, 'image name date_of_birth email added_at email_verified roles is_two_fa phone ').populate(populate);
+    const likedPosts = await rentSch.find({ likes: { $in: [req.user.id] } }).select('_id');
+    const savedPosts = await rentSch.find({ saves: { $in: [req.user.id] } }).select('_id');
+    const userId = req.user.id;
+    // .exec();
+    userProfile = { ...userProfile._doc, totalLikes: Number(likedPosts?.length), likedPosts, savedPosts };
     return otherHelper.sendResponse(res, httpStatus.OK, true, userProfile, null, null, null);
   } catch (err) {
     next(err);
   }
 };
-
 userController.postProfile = async (req, res, next) => {
   try {
     if (req.file) {
       req.body.image = req.file;
     }
-    const { name, date_of_birth, bio, description, image, phone, location, is_two_fa, company_name, company_location, company_established, company_phone_no } = req.body;
-    const updateUser = await userSch.findByIdAndUpdate(req.user.id, { $set: { name, date_of_birth, bio, image, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() } }, { new: true });
+    const { name, email, date_of_birth, bio, description, image, phone, location, is_two_fa, company_name, company_location, company_established, company_phone_no } = req.body;
+    const updateUser = await userSch.findByIdAndUpdate(req.user.id, { $set: { name, email, date_of_birth, bio, image, description, phone, location, company_name, company_location, company_established, company_phone_no, updated_at: new Date() } }, { new: true });
     const msg = 'User Update Success';
     const msgfail = 'User not found.';
     if (updateUser) {
-      return otherHelper.sendResponse(res, httpStatus.OK, true, { name, date_of_birth, bio, image, description, phone, location, company_name, company_location, company_established, company_phone_no }, null, msg, null);
+      return otherHelper.sendResponse(res, httpStatus.OK, true, { name, email, date_of_birth, bio, image, description, phone, location, company_name, company_location, company_established, company_phone_no }, null, msg, null);
     } else {
       return otherHelper.sendResponse(res, httpStatus.NOT_FOUND, false, null, null, msgfail, null);
     }
@@ -769,7 +776,6 @@ userController.loginGOath = async (req, res, next) => {
 
   const public_register_auth_template = await getSetting('template', 'email', 'public_register_auth_template');
 
-  console.log(profile);
   const renderedMail = await renderMail.renderTemplate(
     public_register_auth_template,
     {

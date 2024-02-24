@@ -44,6 +44,7 @@
     "speakeasy": "^2.0.0",
     "swagger-ui-express": "^4.6.3",
     "uniq": "^1.0.1",
+    "url-slug": "^4.0.1",
     "useragent": "^2.3.0",
     "validator": "^10.4.0"
   },

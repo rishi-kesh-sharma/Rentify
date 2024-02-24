@@ -30,8 +30,12 @@ const blogRoutes = require('./api/blog');
 router.use('/blog', blogRoutes);
 
 //All route for rent posts
-const rentPostRoutes = require('./api/rentPost.js');
-router.use('/rentPost', rentPostRoutes);
+const rentRoutes = require('./api/rent.js');
+router.use('/rent', rentRoutes);
+
+//All route for reservation claims
+const reservationClaimRoutes = require('./api/reservationClaim');
+router.use('/reservationClaim', reservationClaimRoutes);
 
 // All route of sliders
 const sliderRoutes = require('./api/slider');

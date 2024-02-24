@@ -1,6 +1,6 @@
 'use strict';
 const errorHelper = {};
-errorHelper.formatErrorObj = err => {
+errorHelper.formatErrorObj = (err) => {
   const formatError = err.toString();
   const obj = JSON.parse(JSON.stringify(formatError.substring(formatError.indexOf('{'))));
   return JSON.parse(obj);
@@ -59,7 +59,7 @@ errorHelper.customErrorResponse = (res, cancellationErr, next) => {
   }
 };
 
-errorHelper.sendFormattedErrorData = err => {
+errorHelper.sendFormattedErrorData = (err) => {
   return err.length > 0 ? err[0].msg : '';
 };
 module.exports = errorHelper;

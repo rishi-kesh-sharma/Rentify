@@ -28,7 +28,6 @@ router.post('/category', authentication, authorization, catSanitize, catValidate
 router.delete('/:id', authentication, authorization, blogModule.DeleteBlog);
 router.delete('/category/:id', authentication, authorization, blogModule.DeleteBlogCat);
 router.get('/htmlblog/:id', blogModule.getstaticBlog);
-
 router.get('/count/increase/:id', countSanitize, countValidate, blogModule.updateViewCount);
 router.get('/count/category/:id', authentication, authorization, blogModule.CountBlogByCat);
 router.post('/multiple/blog', authentication, authorization, blogModule.selectMultipleDataBlog);

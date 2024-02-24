@@ -79,17 +79,21 @@ blogController.getLatestBlog = async (req, res, next) => {
       .populate([
         {
           path: 'author',
-          select: '_id name',
+          select: '_id name image',
         },
         {
           path: 'image',
           select: 'path',
         },
+        {
+          path: 'category',
+          select: '_id title description image slug_url ',
+        },
       ])
-      .select({ slug_url: 1, title: 1, added_at: 1, image: 1 })
+      .select({ slug_url: 1, title: 1, added_at: 1, image: 1, author: 1, tags: 1, category: 1 })
       .sort({ published_on: -1 })
       .skip(0)
-      .limit(5);
+      .limit(8);
     return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog get success!', null);
   } catch (err) {
     next(err);
@@ -113,8 +117,8 @@ blogController.getShowcaseBlog = async (req, res, next) => {
       .select({ slug_url: 1, title: 1, added_at: 1, image: 1, published_on: 1, short_description: 1 })
       .sort({ published_on: -1 })
       .skip(0)
-      .limit(5);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Showcase Blog get success!', null);
+      .limit(8);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Latest Blog get success!', null);
   } catch (err) {
     next(err);
   }
@@ -428,7 +432,7 @@ blogController.GetBlogUnauthorize = async (req, res, next) => {
 
       {
         path: 'author',
-        select: '_id name',
+        select: '_id name image',
       },
       {
         path: 'image',

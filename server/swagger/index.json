@@ -16,11 +16,14 @@
       "description": "Operations related to blogs"
     },
     {
-      "name": "RentPosts",
+      "name": "rents",
       "description": "Endpoints for managing Rent Posts"
+    },
+    {
+      "name": "Reservation Claim",
+      "description": "Endpoints for managing Reservation Claims"
     }
   ],
-
   "securityDefinitions": {
     "bearerAuth": {
       "type": "http",
@@ -34,6 +37,59 @@
     }
   ],
   "paths": {
+    "/user/profile": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get User Profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update User Profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "User Profile object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/user": {
       "get": {
         "tags": ["Users"],
@@ -363,96 +419,7 @@
         }
       }
     },
-    "/user/login/google/": {
-      "post": {
-        "tags": ["Users"],
-        "summary": "Login user using Google",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GoogleLoginInput"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User logged in successfully"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/user/login/facebook/": {
-      "post": {
-        "tags": ["Users"],
-        "summary": "Login user using Facebook",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FacebookLoginInput"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User logged in successfully"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/user/login/github/": {
-      "post": {
-        "tags": ["Users"],
-        "summary": "Login user using GitHub",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GithubLoginInput"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User logged in successfully"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
+
     "/user/register/admin": {
       "post": {
         "tags": ["Users"],
@@ -629,6 +596,96 @@
           },
           "400": {
             "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/login/google/": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user using Google",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleLoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/login/facebook/": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user using Facebook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FacebookLoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/login/github/": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user using GitHub",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GithubLoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal server error"
@@ -1142,9 +1199,9 @@
         }
       }
     },
-    "/rentPost/auth": {
+    "/rent/auth": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Post (Authorized)",
         "security": [
           {
@@ -1168,9 +1225,9 @@
       }
     },
 
-    "/rentPost/public": {
+    "/rent/public": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Post (Unauthorize)",
         "responses": {
           "200": {
@@ -1182,9 +1239,9 @@
         }
       }
     },
-    "/rentPost/highlight": {
+    "/rent/highlight": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Highlight Rent Post",
         "responses": {
           "200": {
@@ -1196,9 +1253,9 @@
         }
       }
     },
-    "/rentPost/latest": {
+    "/rent/latest": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Latest Rent Post",
         "responses": {
           "200": {
@@ -1210,9 +1267,9 @@
         }
       }
     },
-    "/rentPost/showcase": {
+    "/rent/showcase": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Showcase Rent Post",
         "responses": {
           "200": {
@@ -1224,9 +1281,9 @@
         }
       }
     },
-    "/rentPost/trending": {
+    "/rent/trending": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Trending Rent Post",
         "responses": {
           "200": {
@@ -1238,9 +1295,9 @@
         }
       }
     },
-    "/rentPost/latest/{cat_id}": {
+    "/rent/latest/{cat_id}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Latest Rent Post by Category",
         "parameters": [
           {
@@ -1263,9 +1320,9 @@
         }
       }
     },
-    "/rentPost/related/{slug_url}": {
+    "/rent/related/{slug_url}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Related Rent Post",
         "parameters": [
           {
@@ -1288,9 +1345,9 @@
         }
       }
     },
-    "/rentPost/": {
+    "/rent/user": {
       "post": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Save Rent Post",
         "security": [
           {
@@ -1301,7 +1358,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RentPost"
+                "$ref": "#/components/schemas/rent"
               },
               "examples": {
                 "example1": {
@@ -1313,9 +1370,46 @@
                     "meta_tag": ["sample", "tag"],
                     "meta_description": "Sample Meta Description",
                     "tags": ["tag1", "tag2"],
-                    "posted_by": "5c3b244f9ef510172cd1dcb0",
                     "keywords": ["keyword1", "keyword2"],
-                    "slug_url": "sample-url",
+                    "location": {
+                      "province": "Sample Province",
+                      "district": "Sample District",
+                      "municipality": "Sample Municipality",
+                      "area": "Sample Area"
+                    },
+                    "map_iframe": "Sample Map Iframe",
+                    "price": 1000,
+                    "frequency": "per month",
+                    "situated_floor": 2,
+                    "near_by_places": ["place1", "place2"],
+                    "is_available": true,
+                    "amenities": ["amenity1", "amenity2"],
+                    "sub_category": "",
+                    "category": "",
+                    "is_published": true,
+                    "is_highlight": false,
+                    "is_showcase": false,
+                    "is_active": false,
+                    "is_deleted": false
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/rent"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Example Request Body",
+                  "value": {
+                    "title": "Sample Title",
+                    "description": "Sample Description",
+                    "short_description": "Sample Short Description",
+                    "meta_tag": ["sample", "tag"],
+                    "meta_description": "Sample Meta Description",
+                    "tags": ["tag1", "tag2"],
+                    "keywords": ["keyword1", "keyword2"],
                     "location": {
                       "province": "Sample Province",
                       "district": "Sample District",
@@ -1336,7 +1430,6 @@
                     "is_highlight": false,
                     "is_showcase": false,
                     "is_active": false,
-                    "image": "6465fd182a1ce8183c28cc4c",
                     "is_deleted": false
                   }
                 }
@@ -1364,9 +1457,9 @@
         }
       }
     },
-    "/rentPost/{slug_url}": {
-      "put": {
-        "tags": ["RentPosts"],
+    "/rent/{slug_url}": {
+      "post": {
+        "tags": ["rents"],
         "summary": "Update Rent Post",
         "security": [
           {
@@ -1388,7 +1481,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RentPost"
+                "$ref": "#/components/schemas/rent"
               },
               "examples": {
                 "example1": {
@@ -1400,11 +1493,7 @@
                     "meta_tag": ["updated", "tag"],
                     "meta_description": "Updated Meta Description",
                     "tags": ["updated-tag1", "updated-tag2"],
-                    "posted_by": ["updated-user1", "updated-user2"],
                     "keywords": ["updated-keyword1", "updated-keyword2"],
-                    "slug_url": "updated-url",
-                    "likes": ["updated-user1", "updated-user2"],
-                    "saves": ["updated-user1", "updated-user2"],
                     "location": {
                       "province": "Updated Province",
                       "district": "Updated District",
@@ -1424,14 +1513,9 @@
                     "is_highlight": false,
                     "is_showcase": false,
                     "is_active": false,
-                    "image": "6465fd182a1ce8183c28cc4c",
-                    "is_deleted": false,
-                    "deleted_at": "2023-06-16T00:00:00Z",
-                    "deleted_by": "updated-user1",
-                    "added_by": "updated-user1",
-                    "added_at": "2023-06-16T00:00:00Z",
-                    "updated_by": "updated-user2",
-                    "updated_at": "2023-06-16T00:00:00Z"
+                    "image": "",
+                    "images": [""],
+                    "is_deleted": false
                   }
                 }
               }
@@ -1461,9 +1545,9 @@
         }
       }
     },
-    "/rentPost": {
+    "/rent": {
       "delete": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Delete Rent Post",
         "security": [
           {
@@ -1500,7 +1584,7 @@
         }
       },
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Post (Non-Authorized)",
         "security": [
           {
@@ -1521,9 +1605,9 @@
       }
     },
 
-    "/rentPost/count/increase/{id}": {
+    "/rent/count/increase/{id}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Increase View Count",
         "security": [
           {
@@ -1563,9 +1647,9 @@
         }
       }
     },
-    "/rentPost/count/category/{id}": {
+    "/rent/count/category/{id}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Count Rent Posts by Category",
         "security": [
           {
@@ -1602,9 +1686,9 @@
         }
       }
     },
-    "/rentPost/multiple/rentPost": {
+    "/rent/multiple/rent": {
       "post": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Select Multiple Rent Posts",
         "security": [
           {
@@ -1617,7 +1701,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "rentPostIds": {
+                  "rentIds": {
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -1625,7 +1709,7 @@
                   }
                 },
                 "example": {
-                  "rentPostIds": ["rentPostId1", "rentPostId2"]
+                  "rentIds": ["rentId1", "rentId2"]
                 }
               }
             }
@@ -1651,9 +1735,9 @@
         }
       }
     },
-    "/rentPost/multiple/category": {
+    "/rent/multiple/category": {
       "post": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Select Multiple Rent Post Categories",
         "security": [
           {
@@ -1701,9 +1785,9 @@
       }
     },
 
-    "/rentPost/rentPostByTag/{tag}": {
+    "/rent/rentByTag/{tag}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Posts by Tag",
         "parameters": [
           {
@@ -1729,9 +1813,9 @@
         }
       }
     },
-    "/rentPost/rentPostByCreator/{creator}": {
+    "/rent/rentByCreator/{creator}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Posts by Creator",
         "parameters": [
           {
@@ -1757,9 +1841,9 @@
         }
       }
     },
-    "/rentPost/rentPostByTime": {
+    "/rent/rentByTime": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Posts by Time",
         "responses": {
           "200": {
@@ -1771,9 +1855,9 @@
         }
       }
     },
-    "/rentPost/rentPostByTime/{time}": {
+    "/rent/rentByTime/{time}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Posts by Date",
         "parameters": [
           {
@@ -1800,9 +1884,9 @@
       }
     },
 
-    "/rentPost/category/active": {
+    "/rent/category/active": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Active Rent Post Categories",
         "responses": {
           "200": {
@@ -1814,9 +1898,9 @@
         }
       }
     },
-    "/rentPost/category/{id}": {
+    "/rent/category/{id}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Post Category by ID",
         "parameters": [
           {
@@ -1845,9 +1929,9 @@
         }
       }
     },
-    "/rentPost/rentPost/{slug_url}": {
+    "/rent/rent/{slug_url}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Post by Slug URL",
         "parameters": [
           {
@@ -1876,9 +1960,9 @@
         }
       }
     },
-    "/rentPost/rentPostById/{id}": {
+    "/rent/rentById/{id}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Post by ID",
         "parameters": [
           {
@@ -1907,9 +1991,9 @@
         }
       }
     },
-    "/rentPost/rentPostByCat/{slug_url}": {
+    "/rent/rentByCat/{slug_url}": {
       "get": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Get Rent Posts by Category",
         "parameters": [
           {
@@ -1936,9 +2020,9 @@
       }
     },
 
-    "/rentPost/category": {
+    "/rent/category": {
       "post": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Create Rent Post Category",
         "security": [
           {
@@ -1950,7 +2034,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RentPostCategory"
+                "$ref": "#/components/schemas/rentCategory"
               }
             },
             "examples": {
@@ -1981,9 +2065,9 @@
         }
       }
     },
-    "/rentPost/sub_category": {
+    "/rent/sub_category": {
       "post": {
-        "tags": ["RentPosts"],
+        "tags": ["rents"],
         "summary": "Create Rent Post Subcategory",
         "security": [
           {
@@ -1995,7 +2079,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RentPostSubCategory"
+                "$ref": "#/components/schemas/rentSubCategory"
               }
             }
           },
@@ -2025,6 +2109,252 @@
           }
         }
       }
+    },
+
+    "/reservationClaim": {
+      "get": {
+        "tags": ["Reservation Claim"],
+        "summary": "Get Reservation Claims",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reservation Claim"],
+        "summary": "Save Reservation Claim",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+
+        "requestBody": {
+          "description": "Reservation Claim Input",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationClaimInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reservation Claim created successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/reservationClaim/latest": {
+      "get": {
+        "tags": ["Reservation Claim"],
+        "summary": "Get Latest Reservation Claim",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/reservationClaim/trending": {
+      "get": {
+        "tags": ["Reservation Claim"],
+        "summary": "Get Trending Reservation Claim",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/reservationClaim/reservationClaimById/{id}": {
+      "get": {
+        "tags": ["Reservation Claim"],
+        "summary": "Get Reservation Claim by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Reservation Claim ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Reservation Claim not found"
+          }
+        }
+      }
+    },
+    "/reservationClaim/reservationClaimByClaimer/{claimer}": {
+      "get": {
+        "tags": ["Reservation Claim"],
+        "summary": "Get Reservation Claim by Claimer",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "claimer",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Claimer ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/reservationClaim/reservationClaimByTime": {
+      "get": {
+        "tags": ["Reservation Claim"],
+        "summary": "Get Reservation Claim by Time",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/reservationClaim/reservationClaimByTime/{time}": {
+      "get": {
+        "tags": ["Reservation Claim"],
+        "summary": "Get Reservation Claim by Time",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "time",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": true,
+            "description": "Time parameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/reservationClaim/{id}": {
+      "get": {
+        "tags": ["Reservation Claim"],
+        "summary": "Get Reservation Claim Detail",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Reservation Claim ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Reservation Claim not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reservation Claim"],
+        "summary": "Delete Reservation Claim",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Reservation Claim ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reservation Claim deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Reservation Claim not found"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2036,6 +2366,26 @@
       }
     },
     "schemas": {
+      "UserProfile": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
       "UserInput": {
         "type": "object",
         "properties": {
@@ -2118,7 +2468,7 @@
         "properties": {
           "_id": { "type": "string", "default": "5c3b244f9ef510172cd1dcb0" },
           "name": { "type": "string", "default": "Rishikesh Sharma" },
-          "email": { "type": "string", "format": "email", "default": "admin@waftengine.org" },
+          "email": { "type": "string", "format": "email", "default": "rks83601@gmail.com" },
           "roles": {
             "type": "array",
             "default": ["6489897042316d3dc44e2811"]
@@ -2196,11 +2546,15 @@
       "EmailVerificationInput": {
         "type": "object",
         "properties": {
-          "verificationCode": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "code": {
             "type": "string"
           }
         },
-        "required": ["verificationCode"]
+        "required": ["code", "email"]
       },
       "ResendVerificationCodeInput": {
         "type": "object",
@@ -2218,7 +2572,7 @@
           "email": {
             "type": "string",
             "format": "email",
-            "default": "admin@waftengine.org"
+            "default": "rks83601@gmail.com"
           },
           "password": {
             "type": "string",
@@ -2288,11 +2642,6 @@
               "type": "string"
             }
           },
-          "published_on": {
-            "type": "string",
-            "format": "date-time",
-            "default": "2023-06-14T00:00:00.000Z"
-          },
           "is_published": {
             "type": "boolean",
             "required": true,
@@ -2318,30 +2667,6 @@
             "type": "boolean",
             "required": true,
             "default": false
-          },
-          "deleted_at": {
-            "type": "string",
-            "format": "date-time",
-            "default": "2023-06-14T00:00:00.000Z"
-          },
-          "deleted_by": {
-            "type": "string"
-          },
-          "added_by": {
-            "type": "string"
-          },
-          "added_at": {
-            "type": "string",
-            "format": "date-time",
-            "default": "2023-06-14T00:00:00.000Z"
-          },
-          "updated_by": {
-            "type": "string"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "default": "2023-06-14T00:00:00.000Z"
           }
         }
       },
@@ -2364,7 +2689,7 @@
           }
         }
       },
-      "RentPost": {
+      "rent": {
         "type": "object",
         "properties": {
           "title": {
@@ -2391,30 +2716,14 @@
               "type": "string"
             }
           },
-          "posted_by": {
-            "type": "string"
-          },
+
           "keywords": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "slug_url": {
-            "type": "string"
-          },
-          "likes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "saves": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
+
           "location": {
             "type": "object",
             "properties": {
@@ -2467,11 +2776,6 @@
           "sub_category": {
             "type": "string"
           },
-          "published_on": {
-            "type": "string",
-            "format": "date-time",
-            "default": "2023-06-16T00:00:00Z"
-          },
           "is_published": {
             "type": "boolean",
             "default": true,
@@ -2490,8 +2794,15 @@
             "required": true,
             "default": false
           },
-          "image": {
+          "main_image": {
             "$ref": "#/components/schemas/File"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            }
           },
           "is_deleted": {
             "type": "boolean",
@@ -2512,9 +2823,10 @@
         }
       },
       "File": {
-        "type": "string"
+        "type": "string",
+        "format": "binary"
       },
-      "RentPostCategory": {
+      "rentCategory": {
         "type": "object",
         "properties": {
           "title": {
@@ -2540,7 +2852,7 @@
           }
         }
       },
-      "RentPostSubCategory": {
+      "rentSubCategory": {
         "type": "object",
         "properties": {
           "title": {
@@ -2565,6 +2877,28 @@
             "type": "string"
           }
         }
+      },
+      "ReservationClaimInput": {
+        "type": "object",
+        "properties": {
+          "claimed_to": {
+            "type": "string",
+            "default": "648c9cf1431c187a3cf87134",
+            "description": "The ID of the rent post being claimed"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["accepted", "rejected", "pending"],
+            "default": "pending",
+            "description": "The status of the reservation claim (default: pending)"
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the reservation claim is deleted"
+          }
+        },
+        "required": ["claimed_by", "claimed_to", "status"]
       }
     }
   }

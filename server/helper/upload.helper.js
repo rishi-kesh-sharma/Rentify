@@ -37,6 +37,8 @@ uploaderHelper.uploadFiles = (destinationPath, uploadTYpe, fieldData) => {
 
   if (uploadTYpe === 'array') {
     var upload = uploader.array(fieldData[0], fieldData[1]);
+    var upload = uploader.array(fieldData[0], fieldData[1]);
+    // var upload = uploader.array(fieldData);
   } else if (uploadTYpe === 'fields') {
     var upload = uploader.fields(fieldData);
   } else if (uploadTYpe === 'single') {
@@ -52,6 +54,7 @@ uploaderHelper.uploadFiles = (destinationPath, uploadTYpe, fieldData) => {
         if (error.code == 'LIMIT_FILE_SIZE') {
           return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, error, null, `FileSize must be greater than ${temp}MB`, null);
         } else {
+          console.log(error);
           return otherHelper.sendResponse(res, httpStatus.NOT_ACCEPTABLE, false, error, null, `${error}`, null);
         }
       } else {

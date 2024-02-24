@@ -1,0 +1,5 @@
+1.remove unnecessary menus from sidebar
+2.include image field in add accommodation form
+3.add property validation
+4.rent claiming
+5.rent reservation

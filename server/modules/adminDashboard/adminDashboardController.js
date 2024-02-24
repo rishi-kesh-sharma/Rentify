@@ -5,6 +5,7 @@ const userSch = require('./../user/userSchema');
 const bugSch = require('./../bug/bugSchema');
 const roleSch = require('./../role/roleSchema');
 const blogSch = require('./../blog/blogSchema');
+const rentSch = require('./../rent/rentSchema');
 
 const adminDashboardController = {};
 
@@ -23,16 +24,16 @@ adminDashboardController.getNoOfCustomerByRegistration = async (req, res, next) 
         },
       },
     ]);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Get User by Day', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Get User by Registration', null);
   } catch (err) {
     next(err);
   }
 };
 
-adminDashboardController.getWaftEngineInfo = async (req, res, next) => {
+adminDashboardController.getRentifyInfo = async (req, res, next) => {
   try {
     const d = await apiCallHelper.requestThirdPartyApi(req, 'https://waftengine.org/api/documentation/latestinfo', {}, {}, 'GET', next);
-    return otherHelper.sendResponse(res, httpStatus.OK, true, d.data, null, 'Get User by Day', null);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, d.data, null, 'Get Rentify Info', null);
   } catch (err) {
     next(err);
   }
@@ -131,6 +132,96 @@ adminDashboardController.GetAllUserGroupBy = async (req, res, next) => {
       role[j].count = await userSch.countDocuments({ roles: { $in: [role[j]._id] }, is_deleted: false });
     }
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, { role }, 'users by group by get success!', 1, 1, totalData);
+  } catch (err) {
+    next(err);
+  }
+};
+
+adminDashboardController.getLastXDayrentRegistration = async (req, res, next) => {
+  try {
+    const days = req.params.day;
+    var d = new Date();
+    d.setDate(d.getDate() - days);
+    const data = await rentSch.aggregate([
+      {
+        $match: {
+          added_at: { $gte: d },
+          is_deleted: false,
+        },
+      },
+      {
+        $group: {
+          _id: {
+            month: { $month: '$added_at' },
+            day: { $dayOfMonth: '$added_at' },
+            year: { $year: '$added_at' },
+          },
+          amt: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { '_id.year': 1, '_id.month': 1, '_id.day': 1, '_id.rm': 1 },
+      },
+      { $project: { _id: '$_id.year', month: '$_id.month', day: '$_id.day', rm: '$_id.rm', amt: '$amt' } },
+    ]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Get Rent Post by Day', null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+adminDashboardController.getNoOfrentByCategory = async (req, res, next) => {
+  try {
+    const data = await rentSch.aggregate([
+      {
+        $match: {
+          is_deleted: false,
+        },
+      },
+      {
+        $group: {
+          _id: `$category`,
+          amt: { $sum: 1 },
+        },
+      },
+      {
+        $lookup: {
+          from: 'rentpostcats',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'category',
+        },
+      },
+    ]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Get Rent Post count by category', null);
+  } catch (err) {
+    next(err);
+  }
+};
+adminDashboardController.getNoOfrentBySubCategory = async (req, res, next) => {
+  try {
+    const data = await rentSch.aggregate([
+      {
+        $match: {
+          is_deleted: false,
+        },
+      },
+      {
+        $group: {
+          _id: `$sub_category`,
+          amt: { $sum: 1 },
+        },
+      },
+      {
+        $lookup: {
+          from: 'rentpostsubcats',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'sub_category',
+        },
+      },
+    ]);
+    return otherHelper.sendResponse(res, httpStatus.OK, true, data, null, 'Get Rent Post count by sub category', null);
   } catch (err) {
     next(err);
   }

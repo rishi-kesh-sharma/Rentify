@@ -20,5 +20,4 @@ const mediaSchema = new schema({
   added_at: { type: Date, default: Date.now },
   added_by: { type: schema.Types.ObjectId, required: true },
 });
-
 module.exports = Media = mongoose.model('media', mediaSchema);

@@ -1,4 +1,4 @@
-const fileUploadHelper = filePath => {
+const fileUploadHelper = (filePath) => {
   const multer = require('multer');
   const path = require('path');
   const mkdirp = require('mkdirp');
@@ -22,17 +22,17 @@ const fileUploadHelper = filePath => {
       const randomString = await hasher.generateRandomHexString(15);
       cb(null, randomString + '-' + file.originalname);
     },
-    onFileUploadStart: file => {
+    onFileUploadStart: (file) => {
       recentFile = file;
       recentFile.finished = false;
     },
-    onFileUploadComplete: file => {
+    onFileUploadComplete: (file) => {
       recentFile.finished = true;
     },
   });
   const ensureFolderExists = (path, mask) => {
     return new Promise((resolve, reject) => {
-      mkdirp(path, err => {
+      mkdirp(path, (err) => {
         if (err) {
           reject(err); // something else went wrong
         } else {
